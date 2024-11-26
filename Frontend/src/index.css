@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: Rajdhani;
+    src: url('./src/assets/Fonts/Rajdhani/Rajdhani-Bold.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: Rajdhani-Regular;
+    src: url('./src/assets/Fonts/Rajdhani/Rajdhani-Regular.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: Rajdhani-Medium;
+    src: url('./src/assets/Fonts/Rajdhani/Rajdhani-Medium.ttf') format('truetype')
+}
