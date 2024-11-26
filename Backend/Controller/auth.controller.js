@@ -35,7 +35,7 @@ export const signup =  async (req, res) => {
         }
       }
   
-      const token = jwt.sign(data, 'secret_ecom');
+      const token = jwt.sign(data, process.env.DB_KEY);
       res.json({ success: true, token, user })
   
     } catch (error) {
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
           }
         }
   
-        const token = jwt.sign(data, 'secret_ecom');
+        const token = jwt.sign(data, process.env.DB_KEY);
         res.json({ success: true, token })
       }
       else {
@@ -89,7 +89,7 @@ export const adminLogin = async(req, res) =>{
           email: adminEmail,
         }
       }
-      const token = jwt.sign(data, 'secret_ecom')
+      const token = jwt.sign(data, process.env.DB_KEY)
     
       return res.status(200).json({ success: true, token });
     
