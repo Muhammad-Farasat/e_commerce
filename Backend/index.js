@@ -21,7 +21,7 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 
 
-const allowedOrigin = ['http://localhost:5173', 'http://localhost:5174']
+const allowedOrigin = [process.env.FRONTEND, process.env.ADMIN]
 
 const corsOrigin = {
   origin: (origin, callback)=>{
@@ -70,9 +70,11 @@ app.post("/upload", upload.single('product'), (req, res) => {
     return res.status(400).json({ error: "File upload failed" })
   }
   
+  const baseUrl = req.protocol + '://' + req.get('host');
+  
   res.json({
     success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`,
+    image_url: `${baseUrl}/images/${req.file.filename}`, // Dynamic URL
   });
 });
 
