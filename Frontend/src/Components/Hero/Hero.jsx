@@ -1,8 +1,4 @@
 import React from 'react'
-// import hero from '../../assets/Images/banner_image.jpg'
-import hero from '../../../public/Images/banner_image.jpg'
-// import { Item } from '../Item/Item'
-// import item from '../../assets/item.jpg'
 
 function Hero() {
   return (
