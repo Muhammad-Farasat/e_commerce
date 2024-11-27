@@ -12,8 +12,8 @@ export default {
       'Rajdhani-Medium' : ['Rajdhani-Medium']
     },
       backgroundImage:{
-        'hero' : 'url("./src/assets/Images/banner_image.jpg")',
-        'login_img' :'url("./src/assets/Images/login_page_img.jpg")'
+        'hero' : 'url("./public/Images/banner_image.jpg")',
+        'login_img' :'url("./public/Images/login_page_img.jpg")'
       }
   },
   },
