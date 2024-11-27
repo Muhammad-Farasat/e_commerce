@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import new_collections from '../../assets/Images/new_collections'
+// import new_collections from '../../assets/Images/new_collections'
 import { Item } from '../Item/Item'
 
 const NewCollection = () => {
