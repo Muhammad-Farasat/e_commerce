@@ -7,6 +7,6 @@ router.post('/signup', signup)
   
 router.post('/login', login)
 
-router.post('/admin/adminLogin', adminLogin)
+router.post('/adminLogin', adminLogin)
 
 export default router
