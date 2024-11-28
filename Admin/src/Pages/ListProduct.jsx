@@ -40,7 +40,7 @@ function ListProduct() {
 
   const fetchInfo = async () => {
     try {
-        const response = await fetch('https://e-commerce-backend-iota-khaki.vercel.app/allproduct', {
+        const response = await fetch(`${import.meta.env.BACKEND_URL}/allproduct`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ function ListProduct() {
   },[])
 
   const remove_product = async(id) =>{
-    await fetch('https://e-commerce-backend-iota-khaki.vercel.app/removeproduct',{
+    await fetch(`${import.meta.env.BACKEND_URL}/removeproduct`,{
       method: 'POST',
       headers: {
         Accept: 'application/json',

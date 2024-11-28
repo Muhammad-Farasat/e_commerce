@@ -23,12 +23,12 @@ const ShopContextProvider = (props) => {
     });
 
     useEffect(()=>{
-        fetch('https://e-commerce-backend-iota-khaki.vercel.app/allproduct')
+        fetch(`${import.meta.env.BACKEND_URL}/allproduct`)
         .then((response)=>response.json())
         .then((data)=>{setAll_Product(data)})
 
         if(localStorage.getItem('auth-token')) {
-            fetch('https://e-commerce-backend-iota-khaki.vercel.app/getCart',{
+            fetch(`${import.meta.env.BACKEND_URL}/getCart`,{
                 method: 'POST',
                 headers: {
                     Accept: 'application/form-data',
@@ -50,7 +50,7 @@ const ShopContextProvider = (props) => {
 
 
         if(localStorage.getItem('auth-token')){
-            fetch('https://e-commerce-backend-iota-khaki.vercel.app/addtocart',{
+            fetch(`${import.meta.env.BACKEND_URL}/addtocart`,{
                 method: 'POST',
                 headers:{
                     Accept: 'application/form-data',
@@ -82,7 +82,7 @@ const ShopContextProvider = (props) => {
 
 
              if(localStorage.getItem('auth-token')){
-                fetch('https://e-commerce-backend-iota-khaki.vercel.app/removefromcart',{
+                fetch(`${import.meta.env.BACKEND_URL}/removefromcart`,{
                     method: 'POST',
                     headers:{
                         Accept: 'application/form-data',

@@ -23,7 +23,7 @@ function AddProduct() {
         let formData = new FormData()
         formData.append('product', product.image);
 
-        await fetch('https://e-commerce-backend-iota-khaki.vercel.app/upload',{
+        await fetch(`${import.meta.env.BACKEND_URL}/upload`,{
             method: 'POST',
             headers: {
                 Accept: 'application/json'
@@ -35,7 +35,7 @@ function AddProduct() {
             product.image = responseData.image_url
 
 
-            await fetch('https://e-commerce-backend-iota-khaki.vercel.app/addProduct',{
+            await fetch(`${import.meta.env.BACKEND_URL}/addProduct`,{
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

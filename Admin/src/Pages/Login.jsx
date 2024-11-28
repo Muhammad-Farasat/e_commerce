@@ -10,7 +10,7 @@ const Login = () => {
       }
 
     const setlogin = async () =>{
-        const response = await fetch("https://e-commerce-backend-iota-khaki.vercel.app/admin/adminLogin", {
+        const response = await fetch(`${import.meta.env.BACKEND_URL}/admin/adminLogin`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

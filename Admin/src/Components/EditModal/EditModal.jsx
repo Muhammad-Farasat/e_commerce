@@ -24,7 +24,7 @@ const EditModal = ({product, onClose, onSave}) => {
             category: updatedCategory
         }
 
-        const response = await fetch('https://e-commerce-backend-iota-khaki.vercel.app/updateproduct',{
+        const response = await fetch(`${import.meta.env.BACKEND_URL}/updateproduct`,{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

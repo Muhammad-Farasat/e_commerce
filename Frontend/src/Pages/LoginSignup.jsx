@@ -19,7 +19,7 @@ function LoginSignup() {
 
     let responsiveData;
 
-    await fetch ('https://e-commerce-backend-iota-khaki.vercel.app/login',{
+    await fetch (`${import.meta.env.BACKEND_URL}/login`,{
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -43,7 +43,7 @@ function LoginSignup() {
 
     let responsiveData;
 
-    await fetch ('https://e-commerce-backend-iota-khaki.vercel.app/signup',{
+    await fetch (`${import.meta.env.BACKEND_URL}/signup`,{
       method: 'POST',
       headers: {
         Accept: 'application/json',
