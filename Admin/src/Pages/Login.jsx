@@ -10,7 +10,7 @@ const Login = () => {
       }
 
     const setlogin = async () =>{
-        const response = await fetch(`${import.meta.env.BACKEND_URL}/admin/adminLogin`, {
+        const response = await fetch(`${import.meta.env.BACKEND_URL}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
