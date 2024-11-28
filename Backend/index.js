@@ -21,20 +21,20 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 
 
-// const allowedOrigin = [process.env.FRONTEND, process.env.ADMIN]
+const allowedOrigin = [process.env.FRONTEND, process.env.ADMIN]
 
-// const corsOrigin = {
-//   origin: (origin, callback)=>{
-//     if (!origin || allowedOrigin.includes(origin)) {
-//       callback(null, true)
-//     }else{
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   },
-// }
+const corsOrigin = {
+  origin: (origin, callback)=>{
+    if (!origin || allowedOrigin.includes(origin)) {
+      callback(null, true)
+    }else{
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+}
 
 
-// app.use(cors(corsOrigin));
+app.use(cors(corsOrigin));
 
 const __dirname = path.resolve()
 
