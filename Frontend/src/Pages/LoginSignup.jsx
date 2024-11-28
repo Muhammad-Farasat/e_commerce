@@ -19,7 +19,7 @@ function LoginSignup() {
 
     let responsiveData;
 
-    await fetch ('http://localhost:4000/login',{
+    await fetch ('https://e-commerce-backend-iota-khaki.vercel.app/login',{
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -43,7 +43,7 @@ function LoginSignup() {
 
     let responsiveData;
 
-    await fetch ('http://localhost:4000/signup',{
+    await fetch ('https://e-commerce-backend-iota-khaki.vercel.app/signup',{
       method: 'POST',
       headers: {
         Accept: 'application/json',

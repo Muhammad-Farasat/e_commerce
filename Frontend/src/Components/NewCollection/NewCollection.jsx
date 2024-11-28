@@ -7,7 +7,7 @@ const NewCollection = () => {
     const [newCollection, setNewCollection] = useState([])
 
     useEffect(()=>{
-        fetch('http://localhost:4000/newCollection')
+        fetch('https://e-commerce-backend-iota-khaki.vercel.app/newCollection')
         .then((response)=>response.json())
         .then((data)=>setNewCollection(data))
 
