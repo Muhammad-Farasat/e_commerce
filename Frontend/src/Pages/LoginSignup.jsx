@@ -19,6 +19,8 @@ function LoginSignup() {
 
     let responsiveData;
 
+    console.log("Backend URL: " + import.meta.env.BACKEND_URL)
+
     await fetch (`${import.meta.env.BACKEND_URL}/login`,{
       method: 'POST',
       headers: {
