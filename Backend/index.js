@@ -96,18 +96,19 @@ app.post('/upload', upload.single('product'), (req, res) => {
   }
 
   // Upload to Cloudinary
-cloudinary.uploader.upload_stream((error, result) => {
-  if (error) {
-    return res.status(500).json({ error: 'Failed to upload image to Cloudinary' });
-  }
+  cloudinary.uploader.upload_stream((error, result) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to upload image to Cloudinary' });
+    }
 
-    // Send back the URL of the uploaded image
-    console.log(result.secure_url);
-res.json({
-    success: 1,
-    image_url: result.secure_url, // URL of the image on Cloudinary
-  })
-  }).end(req.file.buffer); // Send file buffer to Cloudinary
+      // Send back the URL of the uploaded image
+      console.log(result.CLOUDINARY_URL);
+  res.json({
+      success: 1,
+      image_url: result.CLOUDINARY_URL, // URL of the image on Cloudinary
+    })
+  }).end(req.file.buffer); 
+  
 });
 
 
