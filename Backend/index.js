@@ -1,4 +1,3 @@
-
 import express from 'express'
 import cors from 'cors'
 import multer from 'multer'
@@ -36,19 +35,21 @@ const corsOrigin = {
 
 app.use(cors(corsOrigin));
 
-const __dirname = path.resolve()
+// const __dirname = path.resolve()
 
+// console.log('Frontend Path:', path.join(__dirname, '../Frontend/dist/index.html'));
 
-app.use(express.static(path.join(__dirname, '/Frontend/dist')))
-app.use('/admin', express.static(path.join(__dirname, '/Admin/dist')))
+// app.use(express.static(path.join(__dirname, '/Frontend/dist')))
+// app.use('/admin', express.static(path.join(__dirname, '/Admin/dist')))
 
-app.get('*', (req,res)=>{
-  res.sendFile(path.join(__dirname, 'Frontend', 'dist', 'index.html'))
-})
+// app.get('/admin/*', (req,res)=>{
+//   res.sendFile(path.join(__dirname, 'Admin', 'dist', 'index.html'))
+// })
 
-app.get('/admin/*', (req,res)=>{
-  res.sendFile(path.join(__dirname, 'Admin', 'dist', 'index.html'))
-})
+// app.get('*', (req,res)=>{
+//   res.sendFile(path.join(__dirname, 'Frontend', 'dist', 'index.html'))
+// })
+
 
 // Configure multer storage for image uploads
 const storage = multer.diskStorage({
