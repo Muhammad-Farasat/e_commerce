@@ -7,6 +7,7 @@ import connectToDb from './db/connectToDb.js'
 import dotenv from 'dotenv'
 import authRoutes from './Routes/auth.route.js'
 import productRoutes from './Routes/product.route.js'
+import { v2 as cloudinary } from 'cloudinary';
 
 // const fs = require('fs');
 
@@ -52,31 +53,63 @@ app.use(cors(corsOrigin));
 
 
 // Configure multer storage for image uploads
-const storage = multer.diskStorage({
-  destination: 'upload/images',
-  filename: (req, file, cb) => {
-    cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-  }
+// const storage = multer.diskStorage({
+//   destination: 'upload/images',
+//   filename: (req, file, cb) => {
+//     cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+//   }
+// })
+
+// const upload = multer({ storage: storage })
+
+// app.use('/images', express.static('upload/images'))
+
+// app.post("/upload", upload.single('product'), (req, res) => {
+  
+//   if (!req.file) {
+//     return res.status(400).json({ error: "File upload failed" })
+//   }
+  
+//   const baseUrl = req.protocol + '://' + req.get('host');
+  
+//   res.json({
+//     success: 1,
+//     image_url: `${baseUrl}/images/${req.file.filename}`, // Dynamic URL
+//   });
+// })
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 
-
+// Multer configuration (using memoryStorage to avoid local storage)
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-app.use('/images', express.static('upload/images'));
-
-app.post("/upload", upload.single('product'), (req, res) => {
-  
+// Simple POST route for file upload
+app.post('/upload', upload.single('product'), (req, res) => {
   if (!req.file) {
-    return res.status(400).json({ error: "File upload failed" })
+    return res.status(400).json({ error: 'No file uploaded' });
   }
-  
-  const baseUrl = req.protocol + '://' + req.get('host');
-  
-  res.json({
+
+  // Upload to Cloudinary
+cloudinary.uploader.upload_stream((error, result) => {
+  if (error) {
+    return res.status(500).json({ error: 'Failed to upload image to Cloudinary' });
+  }
+
+    // Send back the URL of the uploaded image
+    console.log(result.secure_url);
+res.json({
     success: 1,
-    image_url: `${baseUrl}/images/${req.file.filename}`, // Dynamic URL
-  });
+    image_url: result.secure_url, // URL of the image on Cloudinary
+  })
+  }).end(req.file.buffer); // Send file buffer to Cloudinary
 });
+
 
 
   
