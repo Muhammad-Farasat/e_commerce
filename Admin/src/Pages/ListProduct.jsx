@@ -13,6 +13,9 @@ function ListProduct() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
 
+  const backend_url = import.meta.env.VITE_BACKEND_URL
+
+
   const updateProduct = (updatedProduct) => {
     setAllProduct((prevProduct) =>
       prevProduct.map((product) =>
@@ -40,7 +43,7 @@ function ListProduct() {
 
   const fetchInfo = async () => {
     try {
-        const response = await fetch(`${import.meta.env.BACKEND_URL}/allproduct`, {
+        const response = await fetch(`${backend_url}/allproduct`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +71,7 @@ function ListProduct() {
   },[])
 
   const remove_product = async(id) =>{
-    await fetch(`${import.meta.env.BACKEND_URL}/removeproduct`,{
+    await fetch(`${backend_url}/removeproduct`,{
       method: 'POST',
       headers: {
         Accept: 'application/json',

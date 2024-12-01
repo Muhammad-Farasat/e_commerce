@@ -6,8 +6,11 @@ const NewCollection = () => {
 
     const [newCollection, setNewCollection] = useState([])
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL
+
     useEffect(()=>{
-        fetch(`${import.meta.env.BACKEND_URL}/newCollection`)
+        // console.log(backend_url);
+        fetch(`${backend_url}/newCollection`)
         .then((response)=>response.json())
         .then((data)=>setNewCollection(data))
 

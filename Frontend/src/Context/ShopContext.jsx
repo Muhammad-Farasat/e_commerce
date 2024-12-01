@@ -1,7 +1,7 @@
 import react, { createContext, useEffect, useState } from 'react'
+// import dotenv from 'dotenv'
 
-
-
+// dotenv.config()
 
 export const ShopContext = createContext(null);
 
@@ -22,17 +22,21 @@ const ShopContextProvider = (props) => {
         return initialCart;
     });
 
+    const backend_url = import.meta.env.VITE_BACKEND_URL
+
     useEffect(()=>{
-        fetch(`${import.meta.env.BACKEND_URL}/allproduct`)
+        fetch(`${backend_url}/allproduct`)
         .then((response)=>response.json())
         .then((data)=>{setAll_Product(data)})
+        .catch((error)=>console.error("error:", error))
 
         if(localStorage.getItem('auth-token')) {
-            fetch(`${import.meta.env.BACKEND_URL}/getCart`,{
+            // console.log("Auth token:",localStorage.getItem('auth-token'))
+            fetch(`${backend_url}/getCart`,{
                 method: 'POST',
                 headers: {
-                    Accept: 'application/form-data',
-                    'auth-token': `${localStorage.getItem('auth-token')}`,
+                    Accept: 'application/json',
+                    'auth-token': localStorage.getItem('auth-token'),
                     'Content-Type': 'application/json'
                 },
                 body: ""
@@ -47,10 +51,8 @@ const ShopContextProvider = (props) => {
     const addToCart = (itemId) => {
         setCartItem((prev)=>{
         const updatedCart = {...prev, [itemId]: (prev[itemId] || 0) + 1}
-
-
         if(localStorage.getItem('auth-token')){
-            fetch(`${import.meta.env.BACKEND_URL}/addtocart`,{
+            fetch(`${backend_url}/addtocart`,{
                 method: 'POST',
                 headers:{
                     Accept: 'application/form-data',
@@ -77,12 +79,8 @@ const ShopContextProvider = (props) => {
             }else{
                 delete updatedCart[itemId]
             }
-
-
-
-
              if(localStorage.getItem('auth-token')){
-                fetch(`${import.meta.env.BACKEND_URL}/removefromcart`,{
+                fetch(`${backend_url}/removefromcart`,{
                     method: 'POST',
                     headers:{
                         Accept: 'application/form-data',

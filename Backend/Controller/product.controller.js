@@ -84,24 +84,92 @@ export const popularWomen = async(req, res)=>{
   
 }
 
-export const addtocart = async(req, res)=>{
-  let userData = await User.findOne({_id: req.user.id})
-  userData.cartData[req.body.itemId] += 1
+export const addtocart = async (req, res) => {
+  try {
+    // Fetch user data by ID
+    let userData = await User.findOne({ _id: req.user.id });
 
-  await User.findOneAndUpdate({_id: req.user.id}, {cartData: userData.cartData})
-  res.send({message: "added"})
+    // Check if user exists
+    if (!userData) {
+      return res.status(404).json({ error: 'User not found' });
+    }
 
+    // Initialize cartData if it doesn't exist
+    if (!userData.cartData) {
+      userData.cartData = {};
+    }
+
+    // Increment item count or set it to 1 if it doesn't exist
+    const itemId = req.body.itemId;
+    userData.cartData[itemId] = (userData.cartData[itemId] || 0) + 1;
+
+    // Update database
+    await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { cartData: userData.cartData }
+    );
+
+    res.json({ message: 'Item added to cart' });
+  } catch (error) {
+    console.error('Error in addtocart:', error.message);
+    res.status(500).json({ error: 'Failed to add item to cart' });
+  }
 }
 
-export const removefromcart = async(req, res)=>{
-  let userData = await User.findOne({_id: req.user.id})
-  userData.cartData[req.body.itemId] -= 1
+export const removefromcart = async (req, res) => {
+  try {
+    // Fetch user data by ID
+    let userData = await User.findOne({ _id: req.user.id });
 
-  await User.findOneAndUpdate({_id: req.user.id}, {cartData: userData.cartData})
-  res.send({message: "removed"})
+    // Check if user exists
+    if (!userData) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if cartData exists
+    if (!userData.cartData || !userData.cartData[req.body.itemId]) {
+      return res.status(400).json({ error: 'Item not in cart' });
+    }
+
+    // Decrement item count and remove if it reaches 0
+    const itemId = req.body.itemId;
+    userData.cartData[itemId] -= 1;
+
+    if (userData.cartData[itemId] <= 0) {
+      delete userData.cartData[itemId]; // Remove item from cart
+    }
+
+    // Update database
+    await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { cartData: userData.cartData }
+    );
+
+    res.json({ message: 'Item removed from cart' });
+  } catch (error) {
+    console.error('Error in removefromcart:', error.message);
+    res.status(500).json({ error: 'Failed to remove item from cart' });
+  }
+};
+
+
+export const getCart = async (req, res) => {
+  try {
+    const userId = req.user.id; // Extract user ID from request
+    const userData = await User.findById(userId); // Query database for user
+
+    // console.log(userId);
+
+    if (!userData) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return cartData or empty object if not initialized
+    res.json(userData.cartData || {});
+  } catch (error) {
+    console.error('Error in getCart:', error.message);
+    res.status(500).json({ error: 'Failed to fetch cart data' });
+  }
 }
 
-export const getCart = async (req, res)=>{
-  let userData = await User.findOne({_id: req.user.id})
-  res.json(userData.cartData)
-}
+

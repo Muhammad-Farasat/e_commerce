@@ -5,15 +5,15 @@
 
 @font-face {
     font-family: Rajdhani;
-    src: url('/public/Fonts/Rajdhani/Rajdhani-Bold.ttf') format('truetype')
+    src: url('/Fonts/Rajdhani/Rajdhani-Bold.ttf') format('truetype')
 }
 
 @font-face {
     font-family: Rajdhani-Regular;
-    src: url('/public/Fonts/Rajdhani/Rajdhani-Regular.ttf') format('truetype')
+    src: url('/Fonts/Rajdhani/Rajdhani-Regular.ttf') format('truetype')
 }
 
 @font-face {
     font-family: Rajdhani-Medium;
-    src: url('/public/Fonts/Rajdhani/Rajdhani-Medium.ttf') format('truetype')
+    src: url('/Fonts/Rajdhani/Rajdhani-Medium.ttf') format('truetype')
 }

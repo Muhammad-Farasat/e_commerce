@@ -21,20 +21,22 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 
 
-const allowedOrigin = [process.env.FRONTEND, process.env.ADMIN]
+// const allowedOrigin = [process.env.FRONTEND, process.env.ADMIN]
 
-const corsOrigin = {
-  origin: (origin, callback)=>{
-    if (!origin || allowedOrigin.includes(origin)) {
-      callback(null, true)
-    }else{
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-}
+// const corsOrigin = {
+//   origin: (origin, callback)=>{
+//     console.log(`allowedOrigin: ${allowedOrigin}`);
+//     if (!origin || allowedOrigin.includes(origin)) {
+//       callback(null, true)
+//     }else{
+//       console.log(`Blocked: ${origin}`);
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+// }
 
 
-app.use(cors(corsOrigin));
+app.use(cors());
 
 // const __dirname = path.resolve()
 
@@ -88,6 +90,10 @@ cloudinary.config({
 // Multer configuration (using memoryStorage to avoid local storage)
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+app.use('/images', express.static('upload/images'));
+
+
 
 // Simple POST route for file upload
 app.post('/upload', upload.single('product'), (req, res) => {

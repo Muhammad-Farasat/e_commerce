@@ -9,8 +9,10 @@ const Login = () => {
         setFormData({...formData, [e.target.name]:e.target.value })
       }
 
+      const backend_url = import.meta.env.VITE_BACKEND_URL
+
     const setlogin = async () =>{
-        const response = await fetch(`${import.meta.env.BACKEND_URL}/adminLogin`, {
+        const response = await fetch(`${backend_url}/adminLogin`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

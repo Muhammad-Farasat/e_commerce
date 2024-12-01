@@ -13,15 +13,16 @@ function LoginSignup() {
     setFormData({...formData, [e.target.name]:e.target.value })
   }
 
+  const backend_url = import.meta.env.VITE_BACKEND_URL
 
   const login = async() =>{
     console.log("It has logged in!!!", formData)
 
     let responsiveData;
 
-    console.log("Backend URL: " + import.meta.env.BACKEND_URL)
+    console.log("Backend URL: " + backend_url)
 
-    await fetch (`${import.meta.env.BACKEND_URL}/login`,{
+    await fetch (`${backend_url}/login`,{
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -45,7 +46,7 @@ function LoginSignup() {
 
     let responsiveData;
 
-    await fetch (`${import.meta.env.BACKEND_URL}/signup`,{
+    await fetch (`${backend_url}/signup`,{
       method: 'POST',
       headers: {
         Accept: 'application/json',
