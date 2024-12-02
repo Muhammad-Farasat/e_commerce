@@ -20,6 +20,7 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json());
 
+app.use(cors());
 
 // const allowedOrigin = [process.env.FRONTEND, process.env.ADMIN]
 
@@ -35,8 +36,24 @@ app.use(express.json());
 //   },
 // }
 
+let message = 'Hello, World!';
 
-app.use(cors({origin: '*'}));
+// GET route
+app.get('/message', (req, res) => {
+  res.json({ message }); // Return the current message
+});
+
+app.post('/message', (req, res) => {
+  const { newMessage } = req.body;
+
+  if (!newMessage) {
+    return res.status(400).json({ error: 'New message is required' });
+  }
+
+  message = newMessage;
+  res.json({ success: true, updatedMessage: message });
+});
+
 
 // const __dirname = path.resolve()
 
