@@ -1,20 +1,15 @@
-import react from 'react'
-import { Route, Routes } from 'react-router-dom'
-import './App.css'
-import Admin from './Pages/Admin'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Login from './Pages/Login';
+import Admin from './Pages/Admin';
 
 function App() {
-
   return (
-    <>
-    {/* <BrowserRouter> */}
-      <Routes>
-        <Route path='/*' element={<Admin />} />
-      </Routes>
-    {/* </BrowserRouter> */}
-    
-    </>
-  )
+    <Routes>
+      <Route path='/login' element={<Login />} />
+      <Route path='/*' element={<Admin />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
