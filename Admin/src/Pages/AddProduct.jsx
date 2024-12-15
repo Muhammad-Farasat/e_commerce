@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import {  Modal } from 'antd';
+import SideBar from '../Components/SideBar/SideBar'
+
+
 
 function AddProduct() {
 
@@ -70,7 +73,9 @@ function AddProduct() {
   
 
   return (
-    <>
+    <>  
+    <section className='flex max-sm:flex-col '>
+        <SideBar/>
         <div className='flex justify-center mt-16 mx-auto  '>
             <div className='w-3/5 h-3/4 flex flex-col items-center justify-center  '>
                 <h1 className=' text-3xl font-bold  '>Add Product</h1>
@@ -97,6 +102,7 @@ function AddProduct() {
 
             </div>
         </div>
+    </section>
     </>
   )
 }

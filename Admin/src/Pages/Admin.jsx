@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import AddProduct from './AddProduct'
+import Login from './Pages/Login'
 import ListProduct from './ListProduct'
-import SideBar from '../Components/SideBar/SideBar'
 
 function Admin() {
 
@@ -14,10 +14,10 @@ function Admin() {
 
   return (
     <>
-        <section className='flex max-sm:flex-col '>
-           <SideBar/>
+        <section >
             <Routes>
               <Route path='/addproduct' element={<AddProduct />} />
+              <Route path='/login' element={<Login /> } />
               <Route path='/listofproduct' element={<ListProduct />} />
             </Routes>
         </section>

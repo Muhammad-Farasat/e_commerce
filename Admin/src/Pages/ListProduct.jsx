@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import EditModal from '../Components/EditModal/EditModal';
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import SideBar from '../Components/SideBar/SideBar'
 // import EditModal from '../Components/EditModal/EditModal'
 
 
@@ -87,6 +88,9 @@ function ListProduct() {
 
   return (
     <>
+
+    <section>
+      <SideBar/>
       <section className='mx-auto h-[100vh] overflow-x-hidden '>
         <div>
           <h1 className='font-bold text-4xl text-center mt-8 max-md:text-2xl '>List Of Product</h1>
@@ -128,6 +132,7 @@ function ListProduct() {
           <EditModal product={selectedProduct} onSave={updateProduct} onClose={closeModal} />
         )
       }
+    </section>
       
     </>
   )
