@@ -12,7 +12,7 @@ const Login = () => {
       const backend_url = import.meta.env.VITE_BACKEND_URL
 
     const setlogin = async () =>{
-        const response = await fetch(`${backend_url}/adminLogin`, {
+        const response = await fetch(`${backend_url}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
