@@ -14,13 +14,11 @@ function Admin() {
 
   return (
     <>
-        <section >
             <Routes>
               <Route path='/addproduct' element={<AddProduct />} />
               <Route path='/login' element={<Login /> } />
               <Route path='/listofproduct' element={<ListProduct />} />
             </Routes>
-        </section>
 
     </>
 

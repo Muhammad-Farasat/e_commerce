@@ -3,7 +3,6 @@ import EditModal from '../Components/EditModal/EditModal';
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import SideBar from '../Components/SideBar/SideBar'
-// import EditModal from '../Components/EditModal/EditModal'
 
 
 function ListProduct() {
