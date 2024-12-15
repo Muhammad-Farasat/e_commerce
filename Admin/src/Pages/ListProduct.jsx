@@ -89,7 +89,7 @@ function ListProduct() {
   return (
     <>
 
-    <section>
+    <section className='flex max-sm:flex-col '>
       <SideBar/>
       <section className='mx-auto h-[100vh] overflow-x-hidden '>
         <div>
