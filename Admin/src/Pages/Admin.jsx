@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import AddProduct from './AddProduct'
-import Login from './Pages/Login'
+import Login from './Login'
 import ListProduct from './ListProduct'
 
 function Admin() {
