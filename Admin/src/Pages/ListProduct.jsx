@@ -110,10 +110,10 @@ function ListProduct() {
                   <td> {product.price} </td>
                   <td> {product.category} </td>
                   <td>
-                    <button onClick={() => { remove_product(product.id) }} className='bg-[#00d4ff] text-[#f4f4f4] px-1 text-xl py-1 rounded-lg max-sm:text-[14px] '><MdDelete /></button>
+                    <button onClick={() => { remove_product(product.id) }} className='bg-[#014483] text-[#f4f4f4] px-1 text-xl py-1 rounded-lg max-sm:text-[14px] '><MdDelete /></button>
                   </td>
                   <td>
-                    <button onClick={() => { handleEditClick(product) }} className='bg-[#00d4ff] text-[#f4f4f4] px-1 text-xl py-1 rounded-lg max-sm:text-[14px] '><MdEdit /></button>
+                    <button onClick={() => { handleEditClick(product) }} className='bg-[#014483] text-[#f4f4f4] px-1 text-xl py-1 rounded-lg max-sm:text-[14px] '><MdEdit /></button>
                   </td>
                 </tr>
               ))}

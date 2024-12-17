@@ -94,7 +94,7 @@ function AddProduct() {
                         
                     <input type="file" name='image'  onChange={changeHandler}  />
                     
-                    <button onClick={Add_Product} className='bg-[#00d4ff] w-full h-10 px-10 py-2.5 font-medium text-white '>Add Product</button>
+                    <button onClick={Add_Product} className='bg-[#014483] w-full h-10 px-10 py-2.5 font-medium text-white '>Add Product</button>
                 </div>
 
             </div>

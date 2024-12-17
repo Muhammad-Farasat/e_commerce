@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { RxCross2 } from "react-icons/rx";
 import Shop from '../../Pages/Shop';
@@ -11,25 +11,42 @@ const NavBar = () => {
 
     const [menu, setMenu] = useState('shop');
     const {getTotalItems} = useContext(ShopContext);
-    // const [isSeller, setIsSeller] = useState(false)
+    const [isNav, setIsNav] = useState(false)
 
     const [hamburger, setHamburger] = useState(false)
-
+    useLocation()
 
     useEffect(()=>{
 
        const user = JSON.parse(localStorage.getItem('user'))
-        console.log(user)
-        // if(user && user.role === 'seller'){
-        //     setIsSeller(true)
-        // }
+       console.log(user)
+
+       const handleChange = () =>{
+        if (window.scrollY>1) {
+            setIsNav(true)
+        }else{
+            setIsNav(false)
+        }
+       }      
+
+       window.addEventListener('scroll', handleChange)
+
+       return () => window.removeEventListener('scroll', handleChange)
 
     },[])
 
+    useEffect(()=>{
+        if (location.pathname==='/') {
+            setMenu('')
+           }
+    },[location.pathname])
+
+    const isHomePage = location.pathname === '/'
+
   return (
     <>
-        <section className=' flex justify-center '>
-                <div className="container w-4/5 bg-[#0e0e0eb4] h-20 font-Rajdhani rounded-bl-lg rounded-br-lg px-6 flex justify-between items-center max-sm:h-12 max-sm:px-2 ">
+        <section className=' flex justify-center sticky top-0 '>
+                <div className={`container w-4/5 h-20 transfrom transition ease-linear font-Rajdhani rounded-bl-lg rounded-br-lg px-6 flex justify-between items-center max-sm:h-12 max-sm:px-2 ${isNav || !isHomePage ? 'bg-[#1d1c1c]' : 'bg-transparent' } `} >
                     
                     <div className='logo max-sm:text-xs text-2xl text-[#f4f4f4] font-extrabold tracking-wider cursor-pointer '>
                         <Link to={'/'}>
@@ -49,9 +66,15 @@ const NavBar = () => {
                             
                             <div className= 'mt-32  '  >
                                 <ul className=' flex flex-col gap-y-5  font-Rajdhani-Regular text-xl cursor-pointer'>
-                                    <li onClick={() =>{setMenu('mens')}} > <Link to={'/mens'}>Mens</Link> {menu==='mens' ? <hr className=' border-blue-500 border-[1px] ' /> : <></>} </li>
-                                    <li onClick={() =>{setMenu('womens')}} > <Link to={'/womens'} >Womens</Link> {menu==='womens' ? <hr className=' border-blue-500 border-[1px] ' /> : <></>} </li>
-                                    <li onClick={() =>{setMenu('kids')}} > <Link to={'/kids'}>Kids</Link> {menu==='kids' ? <hr className=' border-blue-500 border-[1px] ' /> : <></>} </li>
+                                    <li> 
+                                        <Link to={'/mens'} className='block w-full' onClick={() =>{setMenu('mens')}}>Mens</Link> {menu==='mens' ? <hr className=' border-blue-500 border-[1px] ' /> : null} 
+                                    </li>
+                                    <li> 
+                                        <Link to={'/womens'} className='block w-full' onClick={() =>{setMenu('womens')}}>Womens</Link> {menu==='womens' ? <hr className=' border-blue-500 border-[1px] ' /> : null} 
+                                    </li>
+                                    <li> 
+                                        <Link to={'/kids'} className='block w-full' onClick={() =>{setMenu('kids')}}>Kids</Link> {menu==='kids' ? <hr className=' border-blue-500 border-[1px] ' /> : null} 
+                                    </li>
                                 </ul>
                             </div>
                             
@@ -82,9 +105,9 @@ const NavBar = () => {
                     
                     <div className='max-md:hidden max-lg:hidden '>
                         <ul className=' flex gap-5 font-Rajdhani-Regular text-lg text-[#f4f4f4] cursor-pointer'>
-                            <li onClick={() =>{setMenu('mens')}} > <Link to={'/mens'}>Mens</Link> {menu==='mens' ? <hr className=' border-blue-500 border-[1px] ' /> : <></>} </li>
-                            <li onClick={() =>{setMenu('womens')}} > <Link to={'/womens'} >Womens</Link> {menu==='womens' ? <hr className=' border-blue-500 border-[1px] ' /> : <></>} </li>
-                            <li onClick={() =>{setMenu('kids')}} > <Link to={'/kids'}>Kids</Link> {menu==='kids' ? <hr className=' border-blue-500 border-[1px] ' /> : <></>} </li>
+                            <li> <Link to={'/mens'} onClick={() =>{setMenu('mens')}} >Mens</Link> {menu==='mens' ? <hr className=' border-blue-500 border-[1px] ' /> : null} </li>
+                            <li> <Link to={'/womens'} onClick={() =>{setMenu('womens')}} >Womens</Link> {menu==='womens' ? <hr className=' border-blue-500 border-[1px] ' /> : null} </li>
+                            <li><Link to={'/kids'} onClick={() =>{setMenu('kids')}} >Kids</Link> {menu==='kids' ? <hr className=' border-blue-500 border-[1px] ' /> : null} </li>
                         </ul>
                     </div>
 

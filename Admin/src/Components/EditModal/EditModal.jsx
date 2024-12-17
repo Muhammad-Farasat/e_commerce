@@ -68,8 +68,8 @@ const EditModal = ({product, onClose, onSave}) => {
                 
                 {/* <input type="file" name='image' /> */}
 
-                    <button onClick={handleSave} className='w-80 h-10 px-4 py-1.5 bg-[#00d4ff] text-white font-bold text-lg tracking-wide rounded-md' >Edit</button>
-                    <button onClick={onClose} className='w-80 h-10 px-4 py-1.5 bg-[#00d4ff] text-white font-bold text-lg tracking-wide rounded-md' >Cancel</button>
+                    <button onClick={handleSave} className='w-80 h-10 px-4 py-1.5 bg-[#014483] text-white font-bold text-lg tracking-wide rounded-md' >Edit</button>
+                    <button onClick={onClose} className='w-80 h-10 px-4 py-1.5 bg-[#014483] text-white font-bold text-lg tracking-wide rounded-md' >Cancel</button>
 
 
             </div>

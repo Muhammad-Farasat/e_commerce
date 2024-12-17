@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { ShopContext } from '../Context/ShopContext'
 import { Item } from '../Components/Item/Item'
+import Footer from '../Components/Footer/Footer';
 // import EditModal from '../Components/EditModal/EditModal';
 
 function ShopCategory(props) {
@@ -31,11 +32,12 @@ function ShopCategory(props) {
                 })
               }
             </div>
-          </div>
+        </div>
 
 
 
       </section>
+        <Footer />
     </>
   )
 }
