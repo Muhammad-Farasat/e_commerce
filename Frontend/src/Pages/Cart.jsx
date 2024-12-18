@@ -8,7 +8,7 @@ function Cart() {
     <>
       <section>
         <CartItems />
-        <Footer />
+        {/* <Footer /> */}
       </section>
     </>
   )

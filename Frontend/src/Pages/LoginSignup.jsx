@@ -70,13 +70,13 @@ function LoginSignup() {
 
   return (
     <>
-      <section className='flex justify-between'>
+      <section className='flex justify-between max-sm:justify-normal max-sm:overflow-x-hidden '>
 
-        <div style={{'clip-path': 'polygon(0 0, 98% 0, 79% 100%, 0% 100%)'}} className=' bg-login_img  w-3/6 h-[100vh] '>
+        <div style={{'clipPath': 'polygon(0 0, 98% 0, 79% 100%, 0% 100%)'}} className=' bg-login_img  w-3/6 h-[100vh] max-sm:hidden '>
           <div className='bg-[#0e0e0e73] w-full h-full '></div>
         </div>
 
-        <div className='flex justify-center mt-24 mx-auto '>
+        <div className='flex justify-center mt-24 mx-auto max-sm:w-80  '>
           <div className=' w-[30rem] h-[38rem] flex flex-col items-center py-4 '>
             <h1 className='font-bold text-3xl '> {state} </h1>
 
@@ -86,17 +86,17 @@ function LoginSignup() {
                 state === 'Sign up' ? 
                 <div>
                   <input type="text" name='username' value={formData.username} onChange={changeHandler} placeholder='username' 
-                  className='bg-transparent border-2 py-1 px-4 w-96 h-14  ' />
+                  className='bg-transparent border-2 py-3 px-4 w-96 h-full focus:outline-[#00d4ff] max-sm:w-72  ' />
                 </div> : ''
               }
 
 
               <div>
-                <input name='email' type="email" placeholder='email' value={formData.email} onChange={changeHandler} className='bg-transparent border-2 w-96 h-14 py-1 px-4  '  />
+                <input name='email' type="email" placeholder='email' value={formData.email} onChange={changeHandler} className='bg-transparent border-2 w-96 h-full py-3 px-4 focus:outline-[#00d4ff] max-sm:w-72  '  />
               </div>
 
               <div>
-                <input name='password' type="password" placeholder='password' value={formData.password} onChange={changeHandler} className='bg-transparent border-2 w-96 h-14 py-1 px-4  '  />
+                <input name='password' type="password" placeholder='password' value={formData.password} onChange={changeHandler} className='bg-transparent border-2 w-96 h-full py-3 px-4 focus:outline-[#00d4ff] max-sm:w-72 '  />
               </div>
               
               <div>
