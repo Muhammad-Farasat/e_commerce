@@ -104,34 +104,27 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-// Multer configuration (using memoryStorage to avoid local storage)
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary.v2,
+  params: {
+    folder: 'upload', 
+    public_id: (req, file) => `${file.fieldname}_${Date.now()}`,
+  },
+});
 
-app.use('/images', express.static('upload/images'));
+const upload = multer({ storage });
 
 
-
-// Simple POST route for file upload
-app.post('/upload', upload.single('product'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
+app.post("/upload", upload.single('image'), (req, res) => {
+  if (!req.file || !req.file.path) {
+    return res.status(400).json({ error: "File upload failed" });
   }
 
-  // Upload to Cloudinary
-  cloudinary.uploader.upload_stream((error, result) => {
-    if (error) {
-      return res.status(500).json({ error: 'Failed to upload image to Cloudinary' });
-    }
-
-      // Send back the URL of the uploaded image
-      console.log(result.CLOUDINARY_URL);
+  const imageUrl = req.file.path;
   res.json({
-      success: 1,
-      image_url: result.CLOUDINARY_URL, // URL of the image on Cloudinary
-    })
-  }).end(req.file.buffer); 
-  
+    success: 1,
+    image_url: imageUrl, 
+  });
 });
 
 

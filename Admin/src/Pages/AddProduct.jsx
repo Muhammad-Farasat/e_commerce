@@ -17,6 +17,7 @@ function AddProduct() {
         setProductDetail({...productDetail,[name]:files ? files[0] : value })
     }
 
+
     const Add_Product = async () =>{
         console.log(productDetail);
         let responseData;
@@ -27,9 +28,6 @@ function AddProduct() {
 
         await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`,{
             method: 'POST',
-            headers: {
-                Accept: 'application/json'
-            },
             body: formData,
         }).then((resp)=>resp.json()).then((data)=>{responseData=data})
 
