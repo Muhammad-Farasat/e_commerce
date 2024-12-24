@@ -1,30 +1,31 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 export const Item = (props) => {
   return (
     <>
-        <div className=' w-80 h-[30rem] bg-transparent pb-8 hover:shadow-2xl max-sm:w-36 max-sm:h-60 max-md:w-56 max-md:h-96  '>
+      <div className="w-80 h-[40rem] py-2 mt-2  border border-gray-200 max-sm:w-36 max-sm:h-64 max-md:w-56 max-md:h-[28rem]">
+        <Link to={`/product/${props.id}`}>
+          <div className="img w-full h-[85%] overflow-hidden">
+            <img
+              src={props.img}
+              onClick={window.scrollTo(0, 0)}
+              className="h-full w-full object-cover"
+              alt={props.title}
+            />
+          </div>
+        </Link>
 
-            <Link to={`/product/${props.id}`} >
-                <div className='img w-full h-[85%] overflow-hidden  '>
-                    <img src={props.img} onClick={window.scrollTo(0,0)} className='h-full w-full object-cover ' alt="" />
-                </div>
-            </Link>
-
-            <div className='px-2 flex justify-between items-center mt-4 max-sm:flex-col max-sm:items-start max-sm:mt-2 '>
-                <div className='title'>
-                    <h1 className=' font-medium text-xl max-sm:text-[14px] max-lg:text-[16px] max-sm:leading-5 max-lg:leading-4 '>{props.title}</h1>
-                </div>
-
-                <div className='price max-sm:font-bold text-xl max-sm:text-[14px] max-lg:text-[16px] max-lg:leading-4 '>
-                    <p>Rs. {props.price}</p>
-                </div>
-            </div>
-
-
+        <div className=" py-1 flex flex-col gap-2 px-2 ">
+          <h1 className="text-lg max-sm:text-[12px] max-lg:text-[14px] text-gray-800">
+            {props.title}
+          </h1>
+          <p className="font-medium text-lg max-sm:text-[14px] max-lg:text-[16px] text-gray-900">
+            PKR. {props.price}
+          </p>
         </div>
 
+      </div>
     </>
-  )
-}
+  );
+};

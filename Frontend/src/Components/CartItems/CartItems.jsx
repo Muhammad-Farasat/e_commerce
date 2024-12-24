@@ -2,75 +2,84 @@ import React, { useContext } from "react";
 import { ShopContext } from "../../Context/ShopContext";
 
 const CartItems = () => {
-  const { all_product, cartItem, removeFromCart } = useContext(ShopContext);
+  const { all_product, cartItem, removeFromCart, addToCart } =
+    useContext(ShopContext);
+
   const totalPrice = all_product.reduce((total, product) => {
     const quantity = cartItem[product.id] || 0;
     return total + product.price * quantity;
   }, 0);
+  console.log(cartItem);
 
   return (
-    <>
-      <section className="flex justify-center mt-12">
-        <div className="container bg-gray-100 py-8 px-6 rounded-md shadow-md max-sm:px-4">
-          {/* Header */}
-          <div className="grid grid-cols-6 justify-evenly font-medium text-center text-xl mb-6 max-sm:text-[12px] border-b-2 pb-4">
-            <p>Products</p>
-            <p>Title</p>
-            <p>Price</p>
-            <p>Quantity</p>
-            <p>Total</p>
-            <p>Remove</p>
-          </div>
+    <div className="container mx-auto relative top-20 z-0 p-5 max-w-4xl">
+      <h1 className="text-4xl font-extrabold mb-6 text-gray-800 text-center">
+        Your Cart
+      </h1>
 
-          {/* Product Rows */}
-          {all_product.map((e) => {
-            const quantity = cartItem[e.id] || 0;
+      <div className="space-y-6">
+        {all_product.map((e) => {
+          const quantity = cartItem[e.id] || 0;
+          if (quantity > 0) {
+            return (
+              <div
+                key={e.id}
+                className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white p-4 rounded-lg shadow-md"
+              >
+                {/* Product Image */}
+                <div className="flex justify-center">
+                  <img
+                    className="w-24 h-24 object-cover rounded-lg"
+                    src={e.image}
+                    alt={e.name}
+                  />
+                </div>
 
-            if (quantity > 0) {
-              return (
-                <div
-                  key={e.id}
-                  className="grid grid-cols-6 justify-items-center items-center mb-4 text-[16px] max-sm:text-[10px] bg-white p-4 rounded-md shadow-sm"
-                >
-                  {/* Product Image */}
-                  <img className="w-16 h-16 object-cover max-sm:w-12 max-sm:h-12" src={e.image} alt={e.name} />
-
-                  {/* Product Title */}
-                  <p className="text-gray-800 font-medium">{e.name}</p>
-
-                  {/* Price */}
-                  <p className="text-gray-600">RS.{e.price}</p>
-
-                  {/* Quantity */}
-                  <button className="bg-gray-700 text-white px-3 py-1 rounded-md">
-                    {quantity}
-                  </button>
-
-                  {/* Total Price */}
-                  <p className="text-gray-800 font-bold">Rs.{e.price * quantity}</p>
-
-                  {/* Remove Button */}
-                  <p
-                    className="cursor-pointer bg-red-500 text-white rounded-lg px-3 py-1 text-sm max-sm:px-2 max-sm:py-1"
-                    onClick={() => removeFromCart(e.id)}
-                  >
-                    Remove
+                {/* Product Details */}
+                <div className="col-span-2 space-y-2">
+                  <h2 className="text-lg font-semibold text-gray-800">
+                    {e.name}
+                  </h2>
+                  <p className="text-sm text-gray-500">In Stock</p>
+                  <p className="text-md font-semibold text-gray-800">
+                    Rs. {e.price}
                   </p>
                 </div>
-              );
-            }
 
-            return null; // Skip rendering if quantity is 0 or undefined
-          })}
+                {/* Quantity and Actions */}
+                <div className="flex flex-col justify-between">
+                  {/* Counter */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => removeFromCart(e.id)}
+                      className="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+                    <span className="text-md font-semibold">{quantity}</span>
+                    <button
+                      onClick={() => addToCart(e.id)}
+                      className="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                    >
+                      +
+                    </button>
+                  </div>
 
-          {/* Total Price Section */}
-          <div className="mt-8 flex justify-between items-center bg-[#fff] p-4 rounded-md shadow-sm">
-            <p className="text-lg font-bold text-gray-800">Total Cost:</p>
-            <p className="text-lg font-bold text-blue-600">Rs.{totalPrice}</p>
-          </div>
-        </div>
-      </section>
-    </>
+                  {/* Remove Button */}
+                  <button
+                    onClick={() => removeFromCart(e.id)}
+                    className="mt-2 px-3 py-1 bg-red-500 text-white text-sm rounded-md hover:bg-red-600"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            );
+          }
+          return null; // Skip if quantity is 0
+        })}
+      </div>
+    </div>
   );
 };
 

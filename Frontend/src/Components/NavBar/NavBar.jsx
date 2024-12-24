@@ -45,10 +45,10 @@ const NavBar = () => {
 
   return (
     <>
-        <section className=' flex justify-center sticky top-0 '>
-                <div className={`container w-4/5 h-20 transfrom transition ease-linear font-Rajdhani rounded-bl-lg rounded-br-lg px-6 flex justify-between items-center max-sm:h-12 max-sm:px-2 ${isNav || !isHomePage ? 'bg-[#1d1c1c]' : 'bg-transparent' } `} >
+        <section className='h-24 flex justify-center sticky top-0 z-20 '>
+                <div className={`container w-4/5 absolute h-20 transfrom transition ease-linear font-Rajdhani rounded-bl-lg rounded-br-lg px-6 flex justify-between items-center max-sm:h-12 max-sm:px-2 ${isNav || !isHomePage ? 'bg-[#e7e7e7] text-[#111] shadow-md' : 'bg-transparent text-[#e7e7e7]' } `} >
                     
-                    <div className='logo max-sm:text-xs text-2xl text-[#f4f4f4] font-extrabold tracking-wider cursor-pointer '>
+                    <div className='logo max-sm:text-xs text-2xl  font-extrabold tracking-wider cursor-pointer '>
                         <Link to={'/'}>
                             <p>UrbanFabric</p>
                         </Link>
@@ -104,7 +104,7 @@ const NavBar = () => {
                     
                     
                     <div className='max-md:hidden max-lg:hidden '>
-                        <ul className=' flex gap-5 font-Rajdhani-Regular text-lg text-[#f4f4f4] cursor-pointer'>
+                        <ul className=' flex gap-5 font-Rajdhani-Medium text-lg  cursor-pointer'>
                             <li> <Link to={'/mens'} onClick={() =>{setMenu('mens')}} >Mens</Link> {menu==='mens' ? <hr className=' border-blue-500 border-[1px] ' /> : null} </li>
                             <li> <Link to={'/womens'} onClick={() =>{setMenu('womens')}} >Womens</Link> {menu==='womens' ? <hr className=' border-blue-500 border-[1px] ' /> : null} </li>
                             <li><Link to={'/kids'} onClick={() =>{setMenu('kids')}} >Kids</Link> {menu==='kids' ? <hr className=' border-blue-500 border-[1px] ' /> : null} </li>
@@ -115,7 +115,7 @@ const NavBar = () => {
                     
                     <div className='max-md:hidden max-lg:hidden flex items-center gap-6 font-Rajdhani-Medium font-bold tracking-widest '>
                         <Link to={'/cart'}> 
-                            <div className='text-2xl text-[#f4f4f4] relative'>
+                            <div className='text-2xl  relative'>
                                 <MdOutlineShoppingCart />
                                 <div className="noOfItems absolute -top-1.5 -right-2 bg-red-600 rounded-full w-4 h-4 flex justify-center items-center ">
                                     <p className='absolute top-0 text-xs text-[#f4f4f4] ' >{getTotalItems()}</p>
@@ -124,9 +124,9 @@ const NavBar = () => {
                         </Link>
                         {
                             localStorage.getItem('auth-token') ?
-                            <button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}} className='border-2 text-sm rounded-xl px-5 py-1 text-[#f4f4f4] hover:border-[#00d4ff] hover:bg-[#00d4ff] hover:text-[#fff] ' >logout</button> :
+                            <button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}} className='border-2 text-sm rounded-xl px-5 transition transform ease-linear py-1 hover:border-[#00d4ff] hover:bg-[#00d4ff] hover:text-[#fff] ' >logout</button> :
                             <Link to={'/LoginSignup'} >
-                                <button className=' max-md:mt-14 border-2 rounded-xl px-5 py-1 text-sm hover:border-[#00d4ff] hover:bg-[#00d4ff] hover:text-[#fff] ' >Login</button>
+                                <button className=' max-md:mt-14 border-2 rounded-xl px-5 py-1 transition transform ease-in-out text-[#fff] text-sm hover:border-[#00d4ff] hover:bg-[#00d4ff] hover:text-[#fff] ' >Login</button>
                             </Link>
                         
                         }

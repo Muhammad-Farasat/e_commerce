@@ -3,9 +3,9 @@ import React from 'react'
 function Hero() {
   return (
     <>
-        <section className='h-[100vh]  '>
+        <section className='w-full h-[100vh]  '>
 
-            <div className='w-full h-full absolute top-0 -z-50 bg-hero bg-cover bg-center  '>
+            <div className='w-full h-full -z-50 absolute top-0 bg-hero bg-cover bg-center  '>
                 {/* <img src={hero} className='w-full ' alt="" /> */}
                 <div className=' bg-[#0e0e0e86] w-full h-full flex flex-col justify-center items-center font-Rajdhani  '>
                   
