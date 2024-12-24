@@ -8,6 +8,7 @@ import dotenv from 'dotenv'
 import authRoutes from './Routes/auth.route.js'
 import productRoutes from './Routes/product.route.js'
 import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 // const fs = require('fs');
 
@@ -105,25 +106,27 @@ cloudinary.config({
 });
 
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary.v2,
+  cloudinary: cloudinary,
   params: {
-    folder: 'upload', 
+    folder: 'upload', // Folder name in your Cloudinary account
     public_id: (req, file) => `${file.fieldname}_${Date.now()}`,
   },
 });
 
+// Multer Middleware
 const upload = multer({ storage });
 
-
-app.post("/upload", upload.single('image'), (req, res) => {
+// Upload Route
+app.post("/upload", upload.single('product'), (req, res) => {
   if (!req.file || !req.file.path) {
     return res.status(400).json({ error: "File upload failed" });
   }
 
-  const imageUrl = req.file.path;
+  // Successfully uploaded to Cloudinary
+  const imageUrl = req.file.path; // Cloudinary automatically assigns a URL
   res.json({
     success: 1,
-    image_url: imageUrl, 
+    image_url: imageUrl,
   });
 });
 
