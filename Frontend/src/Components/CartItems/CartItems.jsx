@@ -13,7 +13,7 @@ const CartItems = () => {
 
   return (
     <div className="container mx-auto relative top-20 z-0 p-5 max-w-4xl">
-      <h1 className="text-4xl font-extrabold mb-6 text-gray-800 text-center">
+      <h1 className="text-4xl font-extrabold mb-6 text-gray-800 text-center max-sm:text-3xl ">
         Your Cart
       </h1>
 
@@ -24,10 +24,10 @@ const CartItems = () => {
             return (
               <div
                 key={e.id}
-                className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white p-4 rounded-lg shadow-md"
+                className="grid grid-cols-4 max-sm:grid-cols-2 max-md:grid-cols-4 max-lg:grid-cols-4 gap-4 bg-white p-4 rounded-lg shadow-md"
               >
                 {/* Product Image */}
-                <div className="flex justify-center">
+                <div className="flex justify-center max-sm:justify-start ">
                   <img
                     className="w-24 h-24 object-cover rounded-lg"
                     src={e.image}
@@ -36,22 +36,26 @@ const CartItems = () => {
                 </div>
 
                 {/* Product Details */}
-                <div className="col-span-2 space-y-2">
-                  <h2 className="text-lg font-semibold text-gray-800">
+                <div className="col-span-2 space-y-2 max-sm:col-span-1  ">
+                  <h2 className="text-lg font-semibold text-gray-800  ">
                     {e.name}
                   </h2>
                   <p className="text-sm text-gray-500">In Stock</p>
                   <p className="text-md font-semibold text-gray-800">
-                    Rs. {e.price}
+                    Rs. {e.price * quantity}
                   </p>
                 </div>
 
                 {/* Quantity and Actions */}
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col justify-between items-center max-sm:items-start max-sm:space-y-8 max-sm:justify-start max-md:space-y-4 max-md:items-start ">
                   {/* Counter */}
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => removeFromCart(e.id)}
+                      onClick={() => {
+                        if (quantity > 1) {
+                          removeFromCart(e.id);
+                        }
+                      }}
                       className="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
                     >
                       -
