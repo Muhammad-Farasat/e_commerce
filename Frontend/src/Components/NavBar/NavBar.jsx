@@ -45,7 +45,7 @@ const NavBar = () => {
         <div
           className={`container w-4/5 absolute h-20 transfrom transition ease-linear font-Rajdhani rounded-bl-lg rounded-br-lg px-6 flex justify-between items-center max-sm:h-12 max-sm:px-2 ${
             isNav || !isHomePage
-              ? "bg-[#e7e7e7] text-[#111] shadow-md"
+              ? "bg-[#f3f3f3] text-[#111] shadow-md"
               : "bg-transparent text-[#e7e7e7]"
           } `}
         >

@@ -24,12 +24,12 @@ const CartItems = () => {
             return (
               <div
                 key={e.id}
-                className="grid grid-cols-4 max-sm:grid-cols-2 max-md:grid-cols-4 max-lg:grid-cols-4 gap-4 bg-white p-4 rounded-lg shadow-md"
+                className="grid grid-cols-4 max-sm:grid-cols-2 max-sm:gap-y-4 max-sm:gap-x-0 max-md:grid-cols-4 max-lg:grid-cols-4 gap-4 bg-white p-4 rounded-lg shadow-md"
               >
                 {/* Product Image */}
                 <div className="flex justify-center max-sm:justify-start ">
                   <img
-                    className="w-24 h-24 object-cover rounded-lg"
+                    className="w-24 h-24 object-cover rounded-lg max-sm:w-32 max-sm:h-32 "
                     src={e.image}
                     alt={e.name}
                   />
@@ -47,7 +47,7 @@ const CartItems = () => {
                 </div>
 
                 {/* Quantity and Actions */}
-                <div className="flex flex-col justify-between items-center max-sm:items-start max-sm:space-y-8 max-sm:justify-start max-md:space-y-4 max-md:items-start ">
+                <div className="flex flex-col justify-between items-center max-sm:items-start max-sm:space-y-4 max-sm:justify-start max-md:space-y-4 max-md:items-start ">
                   {/* Counter */}
                   <div className="flex items-center gap-2">
                     <button
