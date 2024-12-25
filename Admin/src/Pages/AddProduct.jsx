@@ -85,7 +85,7 @@ function AddProduct() {
         <div className='flex justify-center mt-16 mx-auto  '>
             <div className='w-3/5 h-3/4 flex flex-col items-center justify-center  '>
                 <h1 className=' text-3xl font-bold  '>Add Product</h1>
-
+                { loading ? <Loader /> :
                 <div className='my-8 space-y-8 '>
                         
                     <input value={productDetail.name} name='name' type="text" onChange={changeHandler} placeholder='Enter name' 
@@ -103,9 +103,9 @@ function AddProduct() {
                         
                     <input type="file" name='image'  onChange={changeHandler}  />
                     
-                    <button onClick={Add_Product} className='bg-[#014483] w-full h-10 px-10 py-2.5 font-medium text-white '>{loading ? <Loader/> : 'Add Product'}</button>
+                    <button onClick={Add_Product} className='bg-[#014483] w-full h-10 px-10 py-2.5 font-medium text-white '>Add Product</button>
                 </div>
-
+                }
             </div>
         </div>
     </>
