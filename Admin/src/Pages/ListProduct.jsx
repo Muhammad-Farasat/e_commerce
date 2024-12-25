@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import EditModal from "../Components/EditModal/EditModal";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import Loader from '../Components/Loader/loader'
 
 function ListProduct() {
   const [allProduct, setAllProduct] = useState([]);
-  // const [product, setProduct] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -32,6 +33,7 @@ function ListProduct() {
   // Ends here
 
   const fetchInfo = async () => {
+    setLoading(true)
     try {
       const response = await fetch(`${backend_url}/allproduct`, {
         method: "GET",
@@ -51,8 +53,11 @@ function ListProduct() {
       }
     } catch (error) {
       console.error("Error in fetchInfo:", error);
+    }finally{
+      setLoading(false)
     }
-  };
+  }
+  
 
   useEffect(() => {
     fetchInfo();
@@ -80,7 +85,7 @@ function ListProduct() {
         </div>
 
         <div className="product-list mt-12 grid gap-6 w-full max-xl:w-[85%] mx-auto max-md:w-full">
-          {allProduct.map((product, index) => (
+          {loading ? <Loader /> : allProduct.map((product, index) => (
             <div
               key={index}
               className="product-item flex justify-between items-center p-6 border rounded-lg bg-gray-50 shadow-md max-lg:flex-col max-lg:items-start max-lg:gap-4"

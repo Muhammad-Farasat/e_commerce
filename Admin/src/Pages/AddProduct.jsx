@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {  Modal } from 'antd';
-
+import Loader from '../Components/Loader/loader';
 
 
 function AddProduct() {
@@ -12,6 +12,8 @@ function AddProduct() {
         image: null,
     })
 
+    const [loading, setLoading] = useState(false)
+
     const changeHandler = (e) =>{
         const {name, files, value} = e.target
         setProductDetail({...productDetail,[name]:files ? files[0] : value })
@@ -20,40 +22,49 @@ function AddProduct() {
 
     const Add_Product = async () =>{
         console.log(productDetail);
-        let responseData;
-        let product = productDetail;
-
-        let formData = new FormData()
-        formData.append('product', product.image);
-
-        await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`,{
-            method: 'POST',
-            body: formData,
-        }).then((resp)=>resp.json()).then((data)=>{responseData=data})
-
-        if (responseData.success) {
-            product.image = responseData.image_url
-
-
-            await fetch(`${import.meta.env.VITE_BACKEND_URL}/addProduct`,{
+        setLoading(true)
+        try {
+            let responseData;
+            let product = productDetail;
+    
+            let formData = new FormData()
+            formData.append('product', product.image);
+    
+            await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`,{
                 method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                body: JSON.stringify(product)
-            }).then((resp)=>resp.json()).then((data)=>{
-                data.success?success():error()
-            })
+                body: formData,
+            }).then((resp)=>resp.json()).then((data)=>{responseData=data})
+    
+            if (responseData.success) {
+                product.image = responseData.image_url
+    
+    
+                await fetch(`${import.meta.env.VITE_BACKEND_URL}/addProduct`,{
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                    body: JSON.stringify(product)
+                }).then((resp)=>resp.json()).then((data)=>{
+                    data.success?success():error()
+                })
+    
+            }else{
+                error()
+            }
 
+        } catch (error) {
+            console.error(error.message || "Problem adding product ")
+        }
+        finally{
+            setLoading(false)
         }
 
 
 
     }
 
-    
-  // Modal By Ant UI
 
   const success = () => {
     Modal.success({
@@ -92,7 +103,7 @@ function AddProduct() {
                         
                     <input type="file" name='image'  onChange={changeHandler}  />
                     
-                    <button onClick={Add_Product} className='bg-[#014483] w-full h-10 px-10 py-2.5 font-medium text-white '>Add Product</button>
+                    <button onClick={Add_Product} className='bg-[#014483] w-full h-10 px-10 py-2.5 font-medium text-white '>{loading ? <Loader/> : 'Add Product'}</button>
                 </div>
 
             </div>
