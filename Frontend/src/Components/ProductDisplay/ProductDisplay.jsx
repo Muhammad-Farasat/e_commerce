@@ -15,7 +15,7 @@ const ProductDisplay = (props) => {
 
   return (
     <>
-        <section className='flex justify-center h-[100vh] '>
+        <section className='flex justify-center h-[100vh] max-sm:h-auto max-md:h-auto '>
             <div className='container mt-12 flex justify-between max-sm:flex-col max-sm:items-center   '>
                  {/* Left side */}
 
