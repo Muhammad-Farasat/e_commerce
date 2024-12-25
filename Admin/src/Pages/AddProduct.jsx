@@ -37,8 +37,6 @@ function AddProduct() {
     
             if (responseData.success) {
                 product.image = responseData.image_url
-    
-    
                 await fetch(`${import.meta.env.VITE_BACKEND_URL}/addProduct`,{
                     method: 'POST',
                     headers: {
@@ -47,7 +45,12 @@ function AddProduct() {
                       },
                     body: JSON.stringify(product)
                 }).then((resp)=>resp.json()).then((data)=>{
-                    data.success?success():error()
+                    if(data.success){
+                        success()
+                        formReset()
+                    }else{
+                        error()
+                    }
                 })
     
             }else{
@@ -65,6 +68,14 @@ function AddProduct() {
 
     }
 
+    const formReset = () =>{
+        setProductDetail({
+            name: "",
+        category: "",
+        price: "",
+        image: null,
+        })
+    }
 
   const success = () => {
     Modal.success({
