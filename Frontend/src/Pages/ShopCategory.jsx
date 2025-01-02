@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { Item } from "../Components/Item/Item";
 import Footer from "../Components/Footer/Footer";
@@ -7,8 +7,17 @@ import Footer from "../Components/Footer/Footer";
 function ShopCategory(props) {
   const { all_product } = useContext(ShopContext);
 
+  const handleRef = useRef(null)
+
+  useEffect(()=>{
+    if (handleRef.current) {
+      handleRef.current.scrollIntoView({block: 'start'})
+    }
+  }, [props])
+
   return (
     <>
+    <div ref={handleRef} />
       <section className="flex justify-center mt-8 max-sm:mt-0 ">
         <div className="container ">
           <div className="mt-20 text-center  ">
