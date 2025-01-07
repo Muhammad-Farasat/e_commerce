@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react'
 import './App.css'
 import NavBar from './Components/NavBar/NavBar'
 import {BrowserRouter, Routes, Route, Router, useLocation} from 'react-router-dom'
@@ -26,7 +27,6 @@ function AppContent() {
     <>
       
       {location.pathname !== '/LoginSignup'  && <NavBar />  }
-
         
         <Routes>
           <Route path='/' element={<Shop />} />

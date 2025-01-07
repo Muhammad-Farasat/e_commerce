@@ -6,23 +6,14 @@ import Footer from '../Components/Footer/Footer'
 
 function Shop() {
 
-  const handleRef = useRef()
-
-  useEffect(()=>{
-    if (handleRef.current) {
-      handleRef.current.scrollIntoView({block: 'start'})
-    }
-  }, [])
 
 return (
     <>
-      <div ref={handleRef} />
-        <Hero />
-        <Popular />
-        <NewCollection />
-        <Footer />
-
-      </>
+      <Hero />
+      <Popular />
+      <NewCollection />
+      <Footer />
+    </>
   )
 }
 

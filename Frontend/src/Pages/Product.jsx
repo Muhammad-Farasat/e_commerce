@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import ProductDisplay from '../Components/ProductDisplay/ProductDisplay';
-// import all_product from '../assets/all_product';
 import { ShopContext } from '../Context/ShopContext';
 import Footer from '../Components/Footer/Footer';
 

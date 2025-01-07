@@ -19,13 +19,7 @@ const ProductDisplay = (props) => {
             <div className='container mt-12 flex justify-between max-sm:flex-col max-sm:items-center   '>
                  {/* Left side */}
 
-                <div className='flex justify-center  w-3/6  max-lg:w-[30%] max-sm:w-3/4 ' >
-                    {/* <div className='flex flex-col gap-y-3.5 w-20  '>
-                        <img src={product.image} alt="" />
-                        <img src={product.image} alt="" />
-                        <img src={product.image} alt="" />
-                        <img src={product.image} alt="" />
-                    </div>  */}
+                <div className='flex justify-center w-3/6 px-4 max-lg:w-[30%] max-sm:w-3/4 ' >
                     <div className=''>
                         <img src={product.image} className='w-full h-full ' alt="" />
                     </div>
