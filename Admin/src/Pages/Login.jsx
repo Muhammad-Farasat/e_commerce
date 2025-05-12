@@ -1,71 +1,72 @@
-import React, { useState } from 'react'
-
+import React, { useState } from 'react';
 
 const Login = () => {
-    
-    const [formData, setFormData] = useState({email: '', password:''})
-    
-    const changeHandler = (e) =>{
-        setFormData({...formData, [e.target.name]:e.target.value })
-      }
-
-      const backend_url = import.meta.env.VITE_BACKEND_URL
-
-    const setlogin = async () =>{
+    // Your existing logic (unchanged)
+    const [formData, setFormData] = useState({ email: '', password: '' });
+    const changeHandler = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const backend_url = import.meta.env.VITE_BACKEND_URL;
+    const setlogin = async () => {
         const response = await fetch(`${backend_url}/adminLogin`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-    })
-            console.log(JSON.stringify({...formData}))        
-
-        const data = await response.json()
-        console.log(data)
-        if(data.success){
-            localStorage.setItem('auth-token', data.token)
-            window.location.href = '/'
-        }else{
-            console.log("Something went wrong..!");
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+        if (data.success) {
+            localStorage.setItem('auth-token', data.token);
+            window.location.href = '/';
         }
-        
+    };
 
-    }
-
-
-  return (
-    <>
-    <section className='flex justify-between'>
-
-        <div className='flex justify-center mt-24 mx-auto '>
-        <div className=' w-[30rem] h-[38rem] flex flex-col items-center py-4 '>
-            <h1 className='font-bold text-3xl '> Log-in </h1>
-
-            <div className='space-y-4 mt-10 '>
-
-
-                <div>
-                    <input name='email' type="email" placeholder='email' value={formData.email} onChange={changeHandler} className='bg-transparent border-2 w-96 h-14 py-1 px-4  '  />
+    // Purely visual redesign below
+    return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+            <div className="bg-white p-8 rounded-xl shadow-sm w-full max-w-md border border-gray-100">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <h1 className="text-2xl font-bold text-gray-800">Admin Portal</h1>
+                    <p className="text-gray-500 mt-1">Enter your credentials</p>
                 </div>
 
-                <div>
-                    <input name='password' type="password" placeholder='password' value={formData.password} onChange={changeHandler} className='bg-transparent border-2 w-96 h-14 py-1 px-4  '  />
-                </div>
-                
-                <div>
-                    <button className=' bg-[#00d4ff] w-full h-10 px-10 py-2 font-medium text-white ' onClick={()=>setlogin()} >Login</button>
+                {/* Form (same logic handlers) */}
+                <div className="space-y-5">
+                    <div>
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={changeHandler}
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={changeHandler}
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                        />
+                    </div>
+                    <button
+                        onClick={() => setlogin()}
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg font-medium transition"
+                    >
+                        Login
+                    </button>
                 </div>
 
+                {/* Subtle footer */}
+                <div className="mt-6 text-center text-sm text-gray-400">
+                    © {new Date().getFullYear()} UrbanFabric
+                </div>
             </div>
-
-
         </div>
-        </div>
+    );
+};
 
-    </section>
-    </>
-  )
-}
-
-export default Login
+export default Login;

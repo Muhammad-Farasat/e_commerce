@@ -17,3 +17,8 @@
     font-family: Rajdhani-Medium;
     src: url('/Fonts/Rajdhani/Rajdhani-Medium.ttf') format('truetype')
 }
+
+@font-face {
+    font-family: Rajdhani-Bold;
+    src: url('/Fonts/Rajdhani/Rajdhani-Bold.ttf') format('truetype')
+}

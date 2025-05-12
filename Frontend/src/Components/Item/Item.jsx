@@ -2,47 +2,36 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const Item = (props) => {
-  return (
-    <>
-      <div
-        className="
-          w-80 h-[40rem] py-2 mt-2 border border-gray-200 rounded-md
-          max-md:w-56 max-md:h-[28rem]
-          max-sm:w-full max-sm:h-[24rem] max-sm:px-4
-        "
-      >
-        <Link to={`/product/${props.id}`}>
-          <div className="img w-full h-[85%] overflow-hidden rounded-t-md">
-            <img
-              src={props.img}
-              onClick={() => window.scrollTo(0, 0)}
-              className="h-full w-full object-cover"
-              alt={props.title}
-            />
-          </div>
-        </Link>
 
-        <div className="py-1 flex flex-col gap-2 px-2">
-          <h1
-            className="
-              text-lg text-gray-800
-              max-md:text-[14px]
-              max-sm:text-[12px]
-            "
-          >
-            {props.title}
-          </h1>
-          <p
-            className="
-              font-medium text-lg text-gray-900
-              max-md:text-[16px]
-              max-sm:text-[14px]
-            "
-          >
-            PKR. {props.price}
+  
+  return (
+    <div className="group w-full font-Rajdhani-Regular max-md:w-56 max-sm:w-full h-[30rem] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
+
+      <Link
+        to={`/product/${props.id}`}
+        className="relative h-3/4 block"
+        onClick={() => window.scrollTo(0, 0)}
+      >
+        <img
+          src={props.img}
+          alt={props.title}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+      </Link>
+
+      <div className="h-1/4 p-4 flex flex-col justify-between">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{props.title}</h3>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <p className=" text-lg font-Rajdhani-Medium text-gray-900">
+            PKR {props.price}
           </p>
+
         </div>
       </div>
-    </>
+    </div>
   );
 };

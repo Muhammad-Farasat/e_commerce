@@ -1,6 +1,7 @@
 import express from 'express'
-import {allproduct, removeProduct, updateproduct, addProduct, newCollection, popularWomen, addtocart, getCart, removefromcart} from '../Controller/product.controller.js'
-import FetchUser from '../Middleware/FetchUser.js'
+import {allproduct, removeProduct, updateproduct, addProduct, newCollection, popularWomen} from '../Controller/product.controller.js'
+
+
 
 const router = express.Router()
 
@@ -16,11 +17,6 @@ router.get('/newCollection', newCollection)
   
 router.get('/popularWomen', popularWomen)
 
-router.post('/addtocart', FetchUser, addtocart)
-
-router.post('/removefromcart', FetchUser, removefromcart)
-
-router.post('/getCart', FetchUser, getCart)
 
 export default router
   

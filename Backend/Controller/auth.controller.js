@@ -107,3 +107,22 @@ export const adminLogin = async(req, res) =>{
     
   }
 }
+
+export const userDetail = async (req, res) => {
+  try {
+      const id = req.user.id
+
+      const user = await User.findById(id)
+
+      if (!user) {
+          return res.status(400).json({ message: "User not found" })
+      }
+
+      return res.status(200).json({ success: true, user })
+
+
+  } catch (error) {
+      console.error("Error in controller", error);
+      res.status(500).json({ error: "Internal servre error" })
+  }
+}

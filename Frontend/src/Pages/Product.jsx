@@ -10,8 +10,9 @@ function Product() {
 
   const {all_product} = useContext(ShopContext);
   const {productId} = useParams();
-  const product = all_product.find((e)=> e.id===Number(productId))
-
+  const product = all_product.find((e)=> e._id===productId)
+// console.log(e._id === productId)
+  
   return (
     <>
       <ProductDisplay product={product} />

@@ -7,6 +7,8 @@ import Shop from './Pages/Shop'
 import Product from './Pages/Product'
 import Cart from './Pages/Cart'
 import LoginSignup from './Pages/LoginSignup'
+import CheckOut from './Pages/CheckOut'
+import { Toaster } from 'react-hot-toast'
 
 
 function App() {
@@ -37,9 +39,10 @@ function AppContent() {
             <Route path=':productId' element={<Product />} />
           </Route>
           <Route path='/cart' element={<Cart />} />
+          <Route path='/checkout' element={<CheckOut />} />
           <Route path='/LoginSignup' element={<LoginSignup />} />
         </Routes>
-
+      <Toaster />
     </>
   )
 }

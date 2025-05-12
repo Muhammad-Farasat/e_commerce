@@ -9,7 +9,8 @@ export default {
       fontFamily:{
       'Rajdhani' : ['Rajdhani'],
       'Rajdhani-Regular' : ['Rajdhani-Regular'],
-      'Rajdhani-Medium' : ['Rajdhani-Medium']
+      'Rajdhani-Medium' : ['Rajdhani-Medium'],
+      'Rajdhani-Bold' : ['Rajdhani-Bold']
     },
       backgroundImage:{
         'hero' : 'url("/Images/banner_image.jpg")',

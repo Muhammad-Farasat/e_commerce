@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 
 const FetchUser = async(req, res, next) =>{
     const token = req.header('auth-token')
+    // console.log("This is token", token);
+    
     if(!token){
         res.status(401).send({errors: 'No token found'})
     }

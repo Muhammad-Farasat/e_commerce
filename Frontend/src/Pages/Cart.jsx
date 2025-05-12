@@ -6,7 +6,7 @@ import Footer from '../Components/Footer/Footer'
 function Cart() {
   return (
     <>
-        <CartItems />
+      <CartItems />
     </>
   )
 }

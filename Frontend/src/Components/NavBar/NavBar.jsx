@@ -1,234 +1,106 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { HiBars3BottomRight } from "react-icons/hi2";
-import { RxCross2 } from "react-icons/rx";
-import Shop from "../../Pages/Shop";
-import { ShopContext } from "../../Context/ShopContext";
+import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
+import MenuLinks from "./MenuLinks";
+import CartIcon from "./CartIcon";
+import AuthButton from "./AuthButton";
 
 const NavBar = () => {
   const [menu, setMenu] = useState("shop");
-  const { getTotalItems } = useContext(ShopContext);
-  const [isNav, setIsNav] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
-  const [hamburger, setHamburger] = useState(false);
-  useLocation();
-
+  // Handle scroll effect
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
-
-    const handleChange = () => {
-      if (window.scrollY > 1) {
-        setIsNav(true);
-      } else {
-        setIsNav(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleChange);
-
-    return () => window.removeEventListener("scroll", handleChange);
+    const handleScroll = () => setIsScrolled(window.scrollY > 1);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => (document.body.style.overflow = "");
+  }, [isOpen]);
+
+  // Update menu based on route
   useEffect(() => {
     if (location.pathname === "/") {
       setMenu("");
     }
   }, [location.pathname]);
 
-  const isHomePage = location.pathname === "/";
+  // Text color based on page
+  const textColor = isHomePage ? "text-white" : "text-[#111]";
+  const hoverColor = "hover:text-[#00d4ff]";
 
   return (
     <>
-      <section className="h-24 flex justify-center sticky top-0 z-20 max-sm:h-auto ">
-        <div
-          className={`container w-4/5 absolute h-20 transfrom transition ease-linear font-Rajdhani rounded-bl-lg rounded-br-lg px-6 flex justify-between items-center max-sm:h-12 max-sm:px-2 ${
-            isNav || !isHomePage
-              ? "bg-[#f3f3f3] text-[#111] shadow-md"
-              : "bg-transparent text-[#e7e7e7]"
-          } `}
-        >
-          <div className="logo max-sm:text-xs text-2xl  font-extrabold tracking-wider cursor-pointer ">
-            <Link to={"/"}>
-              <p>UrbanFabric</p>
-            </Link>
-          </div>
-
-          <div
-            onClick={() => setHamburger(!hamburger)}
-            className=" hidden text-3xl max-sm:text-xl max-md:block max-lg:block "
+      {/* Main Navbar - Always shows just logo and hamburger */}
+      <nav
+        className={`fixed w-full z-50 py-4 px-6 transition-all duration-300 ${
+          isScrolled || !isHomePage
+            ? "bg-white/90 backdrop-blur-sm shadow-sm text-[#111]"
+            : "bg-transparent text-[#fff] "
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          {/* Logo */}
+          <Link
+            to="/"
+            className={`text-4xl font-bold max-sm:text-lg  ${hoverColor} transition-colors`}
           >
-            <div className="cursor-pointer">
-              {hamburger ? (
-                <RxCross2 className="z-[999] text-[#f4f4f4] absolute" />
-              ) : (
-                <HiBars3BottomRight className="z-50  " />
-              )}
+            URBANFABRIC
+          </Link>
+
+          {/* Hamburger Menu Button - Always visible */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className={`text-3xl max-sm:text-xl  ${hoverColor} transition-colors`}
+          >
+            <RxHamburgerMenu />
+          </button>
+        </div>
+      </nav>
+
+      {/* Sidebar - Works for both mobile and desktop */}
+      <div
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300 ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsOpen(false)}
+      >
+        {/* Sidebar Panel - Wider on desktop */}
+        <div
+          className={`absolute right-0 top-0 h-full ${
+            window.innerWidth >= 1024 ? "w-1/3" : "w-3/4"
+          } bg-white text-[#111] shadow-lg transition-transform duration-300 ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close Button */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className={`absolute top-4 right-4 text-2xl ${
+               "text-[#111]"
+            } hover:text-[#00d4ff]`}
+          >
+            <RxCross1 />
+          </button>
+
+          {/* Sidebar Content */}
+          <div className="pt-16 px-6 space-y-8">
+            <MenuLinks menu={menu} setMenu={setMenu} isMobile={true} />
+            <div className="flex flex-col items-start gap-y-8">
+              <CartIcon isMobile={true} />
+              <AuthButton />
             </div>
-
-            <div
-              className={`w-[22rem] h-[100vh] max-sm:w-60 z-[99] bg-[#1a1a1a] fixed top-0 right-0 flex px-10 flex-col transition-all duration-300 ${
-                hamburger ? "translate-x-0" : "translate-x-full"
-              }`}
-            >
-              <div className="mt-32">
-                <ul className="flex flex-col text-[#f4f4f4] gap-y-5 font-Rajdhani-Regular text-xl cursor-pointer">
-                  <li>
-                    <Link
-                      to={"/mens"}
-                      className="block w-full"
-                      onClick={() => {
-                        setMenu("mens");
-                      }}
-                    >
-                      Mens
-                    </Link>
-                    {menu === "mens" ? (
-                      <hr className="border-blue-500 border-[1px]" />
-                    ) : null}
-                  </li>
-                  <li>
-                    <Link
-                      to={"/womens"}
-                      className="block w-full"
-                      onClick={() => {
-                        setMenu("womens");
-                      }}
-                    >
-                      Womens
-                    </Link>
-                    {menu === "womens" ? (
-                      <hr className="border-blue-500 border-[1px]" />
-                    ) : null}
-                  </li>
-                  <li>
-                    <Link
-                      to={"/kids"}
-                      className="block w-full"
-                      onClick={() => {
-                        setMenu("kids");
-                      }}
-                    >
-                      Kids
-                    </Link>
-                    {menu === "kids" ? (
-                      <hr className="border-blue-500 border-[1px]" />
-                    ) : null}
-                  </li>
-                </ul>
-              </div>
-              <div className="mt-8 flex flex-col items-start gap-y-8 font-Rajdhani-Medium font-bold tracking-widest">
-                <Link to={"/cart"}>
-                  <div className="text-2xl relative">
-                    <MdOutlineShoppingCart className="text-[#f4f4f4]" />
-                    <div className="noOfItems absolute -top-1.5 -right-2 bg-red-600 rounded-full w-4 h-4 flex justify-center items-center">
-                      <p className="absolute top-0 text-xs">
-                        {getTotalItems()}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-                {localStorage.getItem("auth-token") ? (
-                  <button
-                    onClick={() => {
-                      localStorage.removeItem("auth-token");
-                      window.location.replace("/");
-                    }}
-                    className="border-2 rounded-lg px-4 py-1 text-sm text-[#fff]"
-                  >
-                    logout
-                  </button>
-                ) : (
-                  <Link to={"/LoginSignup"}>
-                    <button className="mt-8 border-2 rounded-lg px-4 py-1 text-sm text-[#ffffff] border-[#00d4ff] hover:bg-[#00d4ff]">
-                      Login
-                    </button>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="max-md:hidden max-lg:hidden ">
-            <ul className=" flex gap-5 font-Rajdhani-Medium text-lg  cursor-pointer">
-              <li>
-                {" "}
-                <Link
-                  to={"/mens"}
-                  onClick={() => {
-                    setMenu("mens");
-                  }}
-                >
-                  Mens
-                </Link>{" "}
-                {menu === "mens" ? (
-                  <hr className=" border-blue-500 border-[1px] " />
-                ) : null}{" "}
-              </li>
-              <li>
-                {" "}
-                <Link
-                  to={"/womens"}
-                  onClick={() => {
-                    setMenu("womens");
-                  }}
-                >
-                  Womens
-                </Link>{" "}
-                {menu === "womens" ? (
-                  <hr className=" border-blue-500 border-[1px] " />
-                ) : null}{" "}
-              </li>
-              <li>
-                <Link
-                  to={"/kids"}
-                  onClick={() => {
-                    setMenu("kids");
-                  }}
-                >
-                  Kids
-                </Link>{" "}
-                {menu === "kids" ? (
-                  <hr className=" border-blue-500 border-[1px] " />
-                ) : null}{" "}
-              </li>
-            </ul>
-          </div>
-
-          {/* ^^^^^^^ Buttons here ^^^^^^^^ */}
-
-          <div className="max-md:hidden max-lg:hidden flex items-center gap-6 font-Rajdhani-Medium font-bold tracking-widest ">
-            <Link to={"/cart"}>
-              <div className="text-2xl  relative">
-                <MdOutlineShoppingCart />
-                <div className="noOfItems absolute -top-1.5 -right-2 bg-red-600 rounded-full w-4 h-4 flex justify-center items-center ">
-                  <p className="absolute top-0 text-xs text-[#f4f4f4] ">
-                    {getTotalItems()}
-                  </p>
-                </div>
-              </div>
-            </Link>
-            {localStorage.getItem("auth-token") ? (
-              <button
-                onClick={() => {
-                  localStorage.removeItem("auth-token");
-                  window.location.replace("/");
-                }}
-                className="border-2 text-sm rounded-xl px-5 transition transform ease-linear py-1 hover:border-[#00d4ff] hover:bg-[#00d4ff] hover:text-[#fff] "
-              >
-                logout
-              </button>
-            ) : (
-              <Link to={"/LoginSignup"}>
-                <button className=" max-md:mt-14 border-2 rounded-xl px-5 py-1 transition transform ease-in-out text-[#fff] text-sm hover:border-[#00d4ff] hover:bg-[#00d4ff] hover:text-[#fff] ">
-                  Login
-                </button>
-              </Link>
-            )}
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 };

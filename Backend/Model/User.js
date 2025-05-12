@@ -13,9 +13,6 @@ const User = mongoose.model("User", {
       type: String,
       required: true
     },
-    cartData: {
-      type: Object,
-    },
     date: {
       type: Date,
       default: Date.now,

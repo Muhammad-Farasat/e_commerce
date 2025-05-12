@@ -1,27 +1,69 @@
-import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-import { AiFillProduct  } from "react-icons/ai";
-import { FaThList } from "react-icons/fa";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { AiFillProduct } from "react-icons/ai";
+import { FaThList, FaBoxOpen } from "react-icons/fa";
+import { NavLink } from 'react-router-dom';
+
 
 
 const SideBar = () => {
   return (
-    <div className='w-96 h-[100vh] bg-[#014483] flex flex-col pl-4 max-lg:w-max max-lg:pr-8 max-md:w-max max-md:pr-4 max-sm:h-auto max-sm:flex-row max-sm:w-full max-sm:justify-between max-sm:items-center max-sm:mx-auto max-sm:pr-4 '>
-
-      <h1 className='text-4xl text-[#f4f4f4] font-Rajdhani mt-6 text-center max-md:text-2xl max-sm:my-4 max-sm:text-lg  '>Admin Panel</h1>
-    
-      <div className='max-sm:flex max-sm:items-center max-sm:gap-x-8 max-[455px]:flex-col  '>
-        <Link to={'/addproduct'}>
-          <p className='font-bold text-lg text-[#f4f4f4] mt-16 text-left flex items-center gap-2 max-md:text-sm  max-sm:mt-0 max-sm:text-[12px] '> <AiFillProduct  /> Add Products</p>
-        </Link>
-
-        <Link to={'/listofproduct'}>
-          <p className='font-bold text-lg text-[#f4f4f4] mt-6 flex items-center gap-2 max-md:text-sm max-sm:mt-0 max-sm:text-[12px] '> <FaThList /> List of Products</p>
-        </Link>
+    <div className='
+      fixed top-0 left-0 h-screen w-64 bg-[#014483] flex flex-col
+      border-r border-[#014483]/30 shadow-xl z-50
+      max-lg:w-20 max-md:w-16 max-sm:hidden
+    '>
+      {/* Logo/Title */}
+      <div className='
+        px-4 py-6 border-b border-[#014483]/30
+      '>
+        <h1 className='
+          text-2xl text-white font-bold text-center 
+          max-lg:text-xl max-md:hidden
+        '>
+          URBAN FABRICS
+        </h1>
       </div>
 
-</div>
-  )
-}
+      {/* Navigation Links */}
+      <div className='flex-1 flex flex-col gap-1 p-2'>
+        <NavLink
+          to="/addproduct"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg transition-all max-lg:justify-center ${isActive ? 'bg-white/20 text-white font-semibold' : 'text-white hover:bg-white/10'
+            }`
+          }
+        >
+          <AiFillProduct className="text-xl" />
+          <span className='max-lg:hidden'>Add Product</span>
+        </NavLink>
 
-export default SideBar
+        <NavLink
+          to="/listofproduct"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg transition-all max-lg:justify-center ${isActive ? 'bg-white/20 text-white font-semibold' : 'text-white hover:bg-white/10'
+            }`
+          }
+        >
+          <FaThList className="text-xl" />
+          <span className='max-lg:hidden'>Products</span>
+        </NavLink>
+
+        <NavLink
+          to="/orders"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-lg transition-all max-lg:justify-center ${isActive ? 'bg-white/20 text-white font-semibold' : 'text-white hover:bg-white/10'
+            }`
+          }
+        >
+          <FaBoxOpen className="text-xl" />
+          <span className='max-lg:hidden'>Orders</span>
+        </NavLink>
+
+
+      </div>
+    </div>
+  );
+};
+
+export default SideBar;

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AddProduct from './AddProduct';
 import ListProduct from './ListProduct';
 import SideBar from '../Components/SideBar/SideBar'
+import Orders from './Orders';
 
 
 function Admin() {
@@ -14,11 +15,12 @@ function Admin() {
   }
 
   return (
-    <section className='flex max-sm:flex-col'>
+    <section className='flex relative max-sm:flex-col'>
         <SideBar/>
         <Routes>
           <Route path='/addproduct' element={<AddProduct />} />
           <Route path='/listofproduct' element={<ListProduct />} />
+          <Route path='/orders' element={<Orders />} />
         </Routes>
     </section>
   );

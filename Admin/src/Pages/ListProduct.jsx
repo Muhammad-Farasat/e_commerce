@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import EditModal from "../Components/EditModal/EditModal";
-import { MdDelete } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import Loader from '../Components/Loader/loader'
+import { MdDelete, MdEdit } from "react-icons/md";
+import { FiSearch } from "react-icons/fi";
+import Loader from '../Components/Loader/loader';
 
 function ListProduct() {
+
   const [allProduct, setAllProduct] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const backend_url = import.meta.env.VITE_BACKEND_URL;
 
+  const filteredProducts = allProduct.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const updateProduct = (updatedProduct) => {
-    setAllProduct((prevProduct) =>
-      prevProduct.map((product) =>
+    setAllProduct(prevProduct =>
+      prevProduct.map(product =>
         product.id === updatedProduct.id ? updatedProduct : product
       )
     );
@@ -22,7 +29,7 @@ function ListProduct() {
 
   const handleEditClick = (product) => {
     setSelectedProduct(product);
-    setIsModalOpen(true);
+    setIsModalOpen(true);    
   };
 
   const closeModal = () => {
@@ -30,10 +37,8 @@ function ListProduct() {
     setSelectedProduct(null);
   };
 
-  // Ends here
-
   const fetchInfo = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await fetch(`${backend_url}/allproduct`, {
         method: "GET",
@@ -42,91 +47,178 @@ function ListProduct() {
         },
       });
 
-      // console.log(data);
-
       const data = await response.json();
       if (response.ok) {
-        console.log("Product added:", data);
         setAllProduct(data);
       } else {
-        console.error("Failed to add product:", data);
+        console.error("Failed to fetch products:", data);
       }
     } catch (error) {
       console.error("Error in fetchInfo:", error);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
-  }
-  
+  };
+
+  const remove_product = async (id) => {
+    try {
+      await fetch(`${backend_url}/removeproduct`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+      setAllProduct(allProduct.filter(product => product.id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  useEffect(()=>{
+    
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden'
+    }else{
+      document.body.style.overflow = 'auto'
+    }
+
+    return()=>{
+      document.body.style.overflow = 'auto'
+    }
+
+
+  },[isModalOpen])
 
   useEffect(() => {
     fetchInfo();
   }, []);
 
-  const remove_product = async (id) => {
-    await fetch(`${backend_url}/removeproduct`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id }),
-    });
-    setAllProduct(allProduct.filter((product) => product.id !== id));
-  };
-
   return (
-    <>
-      <section className="mx-auto h-[100vh] overflow-x-hidden px-4">
-        <div>
-          <h1 className="font-bold text-4xl text-center mt-8 max-md:text-2xl">
-            List of Products
-          </h1>
+
+    <div className="min-h-screen w-10/12 absolute top-0 right-0  bg-gray-50  sm:p-6">
+      <div className="max-w-7xl mx-auto">
+
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Product Inventory</h1>
+          <p className="text-gray-600">Manage your product listings</p>
         </div>
 
-        <div className="product-list mt-12 grid gap-6 w-full max-xl:w-[85%] mx-auto max-md:w-full">
-          {loading ? <Loader /> : allProduct.map((product, index) => (
-            <div
-              key={index}
-              className="product-item flex justify-between items-center p-6 border rounded-lg bg-gray-50 shadow-md max-lg:flex-col max-lg:items-start max-lg:gap-4"
-            >
-              <div className="product-image w-20 max-md:w-16 max-sm:w-12">
-                <img
-                  src={product.image}
-                  className="w-full h-auto rounded-md"
-                  alt={product.name}
-                />
-              </div>
-              <div className="product-details flex-1 mx-6 max-lg:mx-4">
-                <h3 className="product-name text-2xl font-medium text-gray-800 max-lg:text-xl max-md:text-lg">
-                  {product.name}
-                </h3>
-                <p className="product-category text-md text-gray-500 max-md:text-sm">
-                  Category: {product.category}
-                </p>
-                <p className="product-price text-xl font-bold text-green-600 max-md:text-md">
-                  ${product.price}
-                </p>
-              </div>
-              <div className="product-actions flex gap-4 max-lg:gap-2">
-                <button
-                  onClick={() => remove_product(product.id)}
-                  className="delete-btn bg-red-500 text-white px-4 py-2 text-lg rounded-md shadow-md hover:bg-red-600 max-md:px-3 max-md:py-1 max-md:text-sm"
-                >
-                  <MdDelete />
-                </button>
-                <button
-                  onClick={() => handleEditClick(product)}
-                  className="edit-btn bg-blue-500 text-white px-4 py-2 text-lg rounded-md shadow-md hover:bg-blue-600 max-md:px-3 max-md:py-1 max-md:text-sm"
-                >
-                  <MdEdit />
-                </button>
-              </div>
+        {/* Search and Filter Bar */}
+        <div className="mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
+
+          <div className="relative w-full sm:w-96">
+
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FiSearch className="text-gray-400" />
             </div>
-          ))}
-        </div>
-      </section>
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
+          <button
+            onClick={fetchInfo}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          >
+            Refresh
+          </button>
+
+        </div>
+
+        {/* Product List */}
+        {loading ? (
+
+          <div className="flex justify-center py-12">
+            <Loader />
+          </div>
+        )
+          : filteredProducts.length === 0 ? (
+
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No products found</p>
+            </div>
+
+          ) : (
+
+            <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+
+              {/* Table Header */}
+              <div className="hidden sm:grid grid-cols-12 bg-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <div className="col-span-5">Product</div>
+                <div className="col-span-2">Category</div>
+                <div className="col-span-2">Price</div>
+                <div className="col-span-3 text-right">Actions</div>
+              </div>
+
+              {/* Product Items */}
+              <div className="divide-y divide-gray-200">
+                {filteredProducts.map((product) => (
+
+                  <div key={product.id} className="grid grid-cols-1 sm:grid-cols-12 px-6 py-4 hover:bg-gray-50">
+                  
+                    {/* Product Info (Mobile) */}
+                    <div className="sm:hidden mb-3">
+                      <div className="flex items-center space-x-3">
+                        <img
+                          src={product.image}
+                          className="w-16 h-16 object-cover rounded-md"
+                          alt={product.name}
+                        />
+                        <div>
+                          <h3 className="text-lg font-medium text-gray-900">{product.name}</h3>
+                          <p className="text-sm text-gray-500">${product.price}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Product Info (Desktop) */}
+                    <div className="hidden sm:flex items-center col-span-5">
+                      <img
+                        src={product.images[0]}
+                        className="w-16 h-16 object-cover rounded-md mr-4"
+                        alt={product.name}
+                      />
+                      <h3 className="text-md font-medium text-gray-900">{product.name}</h3>
+                    </div>
+                    <div className="hidden sm:flex items-center col-span-2">
+                      <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                        {product.category}
+                      </span>
+                    </div>
+                    <div className="hidden sm:flex items-center col-span-2 font-medium text-green-600">
+                      ${product.price}
+                    </div>
+                    <div className="col-span-12 sm:col-span-3 flex justify-end space-x-2 mt-2 sm:mt-0">
+                      <button
+                        onClick={() => handleEditClick(product)}
+                        className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+                        title="Edit"
+                      >
+                        <MdEdit className="text-xl" />
+                      </button>
+                      <button
+                        onClick={() => remove_product(product.id)}
+                        className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
+                        title="Delete"
+                      >
+                        <MdDelete className="text-xl" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          )}
+      </div>
+
+      {/* Edit Modal */}
       {isModalOpen && (
         <EditModal
           product={selectedProduct}
@@ -134,7 +226,7 @@ function ListProduct() {
           onClose={closeModal}
         />
       )}
-    </>
+    </div>
   );
 }
 

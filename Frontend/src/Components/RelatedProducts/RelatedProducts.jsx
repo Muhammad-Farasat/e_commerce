@@ -1,39 +1,82 @@
-import React, { useContext } from 'react'
-// import data_product from '../../assets/Images/data'
-import { Item } from '../Item/Item'
-import { ShopContext } from '../../Context/ShopContext'
+import React, { useContext } from 'react';
+import { Item } from '../Item/Item';
+import { ShopContext } from '../../Context/ShopContext';
+import { motion } from 'framer-motion';
 
-const RelatedProducts = ({category}) => {
+const RelatedProducts = ({ category }) => {
+    const { all_product } = useContext(ShopContext);
+    const relatedProduct = all_product.filter((product) => product.category === category).slice(0, 4);
 
+    // Animation variants
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
 
-    const { all_product } = useContext(ShopContext)
+    const itemVariant = {
+        hidden: { y: 20, opacity: 0 },
+        show: { y: 0, opacity: 1 }
+    };
 
-    const relatedProduct = all_product.filter((product)=>product.category === category).slice(0,4)
-
-
-  return (
-    <>
-        <section className='mt-12 flex justify-center ' >
-            <div className='container flex flex-col justify-center '>
-               
-                    <div className=' flex flex-col items-center justify-center '>
-                        <h1 className='text-3xl font-medium max-sm:text-2xl ' >Related Products</h1>
-                        <hr className=' border-[1.5px] w-72 max-sm:w-52 ' />
+    return (
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+            <div className="max-w-7xl mx-auto">
+                {/* Animated Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center mb-12"
+                >
+                    <h1 className="text-4xl font-Rajdhani-Bold mb-4 max-sm:text-3xl">
+                        Related Products
+                    </h1>
+                    <div className="flex justify-center">
+                        <div className="w-24 h-1 bg-gradient-to-r from-[#00d4ff] to-[#00a8e8] rounded-full"></div>
                     </div>
+                    <p className="text-gray-600 mt-4">More from this collection</p>
+                </motion.div>
 
-                <div className='mt-8'>
-                    <div className='flex justify-center gap-x-6 max-sm:flex-wrap max-sm:items-center '>
-                        {
-                            relatedProduct.map((item, i) => {
-                                return <Item key={i} id={item.id} title={item.name} img={item.image} price={item.price} />
-                            })
-                        }
+                {/* Product Grid */}
+                {relatedProduct.length > 0 ? (
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4"
+                    >
+                        {relatedProduct.map((item, i) => (
+                            <motion.div 
+                                key={i}
+                                variants={itemVariant}
+                                whileHover={{ y: -5 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <Item
+                                    id={item._id}
+                                    title={item.name}
+                                    img={item.images[0]}
+                                    price={item.price}
+                                    className="shadow-lg hover:shadow-xl transition-all"
+                                />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                ) : (
+                    <div className="text-center py-12">
+                        <p className="text-gray-500 text-lg">No related products found</p>
                     </div>
-                </div>
+                )}
             </div>
-        </section> 
-    </>
-  )
-}
+        </section>
+    );
+};
 
-export default RelatedProducts
+export default RelatedProducts;
