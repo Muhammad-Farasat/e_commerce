@@ -192,7 +192,7 @@ function ListProduct() {
                       </span>
                     </div>
                     <div className="hidden sm:flex items-center col-span-2 font-medium text-green-600">
-                      ${product.price}
+                      Rs.{product.price}
                     </div>
                     <div className="col-span-12 sm:col-span-3 flex justify-end space-x-2 mt-2 sm:mt-0">
                       <button
